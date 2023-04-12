@@ -1,0 +1,17 @@
+{
+    "name": "spms-project",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "frontend": "cd frontend && npm start",
+        "backend": "cd backend && nodemon server.js",
+        "dev": "concurrently \"npm run frontend\" \"npm run backend\""
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "concurrently": "^8.0.1"
+    }
+}
