@@ -195,11 +195,6 @@ const DisplayProjects = (props) => {
         </Modal>
 
 
-
-
-        {/* Project Option Selection Modal */}
-
-
         <Modal size="sm" show={smShow} onHide={handleHideSelectionModal} aria-labelledby="example-modal-sizes-title-sm" >
             <Modal.Header closeButton className='modalHeader'>
                 <Modal.Title id="example-modal-sizes-title-sm" className='titleSelection'>

@@ -340,10 +340,6 @@ const Projects = ({props}) => {
         form.reset();
         setPhaseUpdateModal(false)
    }
-
-
-
-
   return (
     <>
         <ListGroup.Item className='newProjectBtn' onClick={handleShow}>
@@ -390,13 +386,13 @@ const Projects = ({props}) => {
                 <Col>
                 <Form.Group className="mb-3 inputGroup" >
                     <Form.Label >Start Date</Form.Label>
-                    <Form.Control type="date" name='startDate' id='startDate' className='formInput' value={projectDetails.startDate} onChange={handleInputs} placeholder="date" />
+                    <Form.Control type="date" name='startDate' id='startDate' className='formInput' value={projectDetails.startDate} onChange={handleInputs} placeholder="date" min={new Date().toISOString().split('T')[0]}  />
                 </Form.Group>
                 </Col>
                 <Col>
                 <Form.Group className="mb-3 inputGroup" >
                     <Form.Label >Due Date</Form.Label>
-                    <Form.Control type="date" name='dueDate' id='dueDate' className='formInput' value={projectDetails.dueDate} onChange={handleInputs} placeholder="date" />
+                    <Form.Control type="date" name='dueDate' id='dueDate' className='formInput' value={projectDetails.dueDate} onChange={handleInputs} placeholder="date" min={new Date().toISOString().split('T')[0]}  />
                 </Form.Group>
                 </Col>
                 

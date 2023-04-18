@@ -87,6 +87,10 @@ module.exports = router.post('/googleSignIn', async(req, res) => {
                 $set: {
                     name: payload.name,
                     image: payload.picture,
+                    userType: payload.userType,
+                    registrationNo: payload.registrationNo,
+                    cgpa: payload.cgpa,
+                    specialization: payload.specialization,
                 }
             });
 
@@ -103,6 +107,9 @@ module.exports = router.post('/googleSignIn', async(req, res) => {
                 email: payload.email,
                 image: payload.picture,
                 registrationNo: payload.registrationNo,
+                userType: payload.userType,
+                cgpa: payload.cgpa,
+                specialization: payload.specialization,
             };
 
             console.log("user updated")
@@ -114,6 +121,9 @@ module.exports = router.post('/googleSignIn', async(req, res) => {
                 email: payload.email,
                 image: payload.picture,
                 registrationNo: payload.registrationNo,
+                userType: payload.userType,
+                cgpa: payload.cgpa,
+                specialization: payload.specialization,
             });
 
             await data.save();
@@ -133,6 +143,9 @@ module.exports = router.post('/googleSignIn', async(req, res) => {
                 email: payload.email,
                 image: payload.picture,
                 registrationNo: payload.registrationNo,
+                userType: payload.userType,
+                cgpa: payload.cgpa,
+                specialization: payload.specialization,
             };
 
             res.status(201).send(userProfile)
@@ -191,7 +204,6 @@ module.exports = router.post('/createNewUser', upload.single("userImage"), async
                     email: userEmail,
                     userPassword: userPassword,
                     userCnfrmPass: userCnfrmPass,
-                    registrationNo: registrationNo,
                     imageName: userImage.originalname,
                     image: userImage.path,
                     imageType: userImage.mimetype,
@@ -211,15 +223,8 @@ module.exports = router.post('/createNewUser', upload.single("userImage"), async
 
             const url = `http://localhost:5000/verify/${token}`
 
-            sendEmail({
-                subject: "Verify Account",
-                from: process.env.GOOGLE_EMAIL,
-                to: userEmail,
-                text: "I am sending an email from nodemailer!",
-                html: `Click <a href = '${url}'>here</a> to confirm your email.`
-            });
 
-            res.status(201).json({ message: `An email has been sent to your account: ${userEmail}. Please verify.` });
+            res.status(201).json({ message: `Account Created Successfully ` });
         }
     } catch (error) {
         res.status(500).send(error.message);
@@ -235,7 +240,7 @@ module.exports = router.post('/signInUser', async(req, res) => {
 
     if (!userExist) {
         return res.status(404).send({
-            message: "User does not exist or account not verified."
+            message: "User does not exist"
         });
     }
 
@@ -251,6 +256,10 @@ module.exports = router.post('/signInUser', async(req, res) => {
                 name: userExist.name,
                 email: userExist.email,
                 image: userExist.image,
+                registrationNo: userExist.registrationNo,
+                userType: userExist.userType,
+                cgpa: userExist.cgpa,
+                specialization: userExist.specialization,
             };
 
             let token = await userExist.generateAuthToken();
@@ -264,7 +273,7 @@ module.exports = router.post('/signInUser', async(req, res) => {
             res.status(201).json(userProfile);
 
         } else {
-            res.status(400).json({ message: "invalid crededntials or unverified account" })
+            res.status(400).json({ message: "invalid crededntials" })
         }
 
     } catch (error) {

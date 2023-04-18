@@ -10,13 +10,14 @@ import Eventscalendar from './Eventscalendar';
 import MyNotes from './MyNotes';
 import Profile from './Profile';
 import Notifications from './Notifications';
+import UploadFiles from './UploadFiles';
 
 const MainNavbar = () => {
 
     return (
       <Navbar expand="md" fixed="top" className='navbarMain justify-content-end'>
   <Container>
-    <Navbar.Brand className='title' href="#home">SPMS</Navbar.Brand>
+    <Navbar.Brand className='title' href="#home">Student Project Management System</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" className='toggleBtn1'/>
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto navItems">
@@ -24,9 +25,10 @@ const MainNavbar = () => {
         <Nav.Link href="#todos" className='navLinks'><MyNotes/></Nav.Link>
         <Nav.Link href="#projects" className='navLinks'><DisplayProjects/></Nav.Link>
         <Nav.Link href="#messages" className='navLinks'><Messages/></Nav.Link>
+        <Nav.Link href="#uploadFiles" className='navLinks'><UploadFiles/></Nav.Link>
         <Nav.Link href="#calendar" className='navLinks'><Eventscalendar/></Nav.Link>
         <Nav.Link href="#searchMembers" className='navLinks'><Notifications/></Nav.Link>         
-        <Nav.Link href="#searchMembers" className='navLinks'><Profile/></Nav.Link>         
+        <Nav.Link href="#searchMembers" className='navLinks'><Profile/></Nav.Link>
       </Nav>
     </Navbar.Collapse>
   </Container>

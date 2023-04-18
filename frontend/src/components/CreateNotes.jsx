@@ -78,11 +78,6 @@ const CreateNotes = ({props}) => {
             </Modal.Footer>
         </Modal>
 
-
-
-
-        {/* Alert Modal */}
-
         <Modal size="sm" show={showAlert} onHide={handleAlertClose} backdrop="static" keyboard={false} aria-labelledby="example-modal-sizes-title-sm">
             <Modal.Header closeButton className='modalHeader'>
                 <Modal.Title id="example-modal-sizes-title-sm">{alertTitle}</Modal.Title>

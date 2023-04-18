@@ -32,7 +32,7 @@ const Profile = () => {
   return (
     <>
         <ListGroup.Item className='navList' onClick={()=>setShowAlert(true)}>
-            <i className='fa fa-user-circle'>&nbsp;</i>         
+            <i className='fa fa-user-circle'>&nbsp;</i>
             {' '}
             Profile
         </ListGroup.Item>
@@ -61,6 +61,15 @@ const Profile = () => {
                         </Row>
                         <Row>
                             <p>{state.registrationNo}</p>
+                        </Row>
+                        <Row>
+                            <p>{state.userType}</p>
+                        </Row>
+                        <Row>
+                            <p>{state.specialization}</p>
+                        </Row>
+                        <Row>
+                            <p>{state.cgpa}</p>
                         </Row>
                     </Container>
                 :

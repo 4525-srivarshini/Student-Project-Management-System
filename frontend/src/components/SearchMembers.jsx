@@ -7,7 +7,7 @@ import image_S1 from '../images/abstract10.png'
 import { UserContext } from '../App'
 
 const SearchMembers = ({props}) => {
-    const {state, dispatch} = useContext(UserContext);  
+    const {state, dispatch} = useContext(UserContext);
     const [showAlert, setShowAlert] = useState(false);
     const handleAlertClose = () =>{setShowAlert(false);}
     const [alertMessage, setAlertMessage] = useState("");
@@ -16,8 +16,8 @@ const SearchMembers = ({props}) => {
     const [searchInput, setSearchInput] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const [allfriends, setAllfriends] = useState([]);
+    const [selectedUser, setSelectedUser] = useState([]);
 
-    
     
     const getFriends = async () =>{
         try {
@@ -46,67 +46,59 @@ const SearchMembers = ({props}) => {
     }
 
     const handleKeyDown = async (e) =>{
-        
-
         if(e.keyCode === 13 && searchInput){
 
             try {
                 const response = await fetch('/searchBar', {
                     method: 'POST',
                     headers: {
-                        'Content-Type' : 'application/json' 
+                        'Content-Type' : 'application/json'
                     },
                     body: JSON.stringify({searchInput}),
                 })
-                
                 let data = await response.json();
                 if(response.status === 201 && data.length > 0){
                     setSearchResult(data);
-                } 
+                }
                 else{
                     setAlertTitle("Alert");
                     setAlertMessage("No matches found.");
                     setShowAlert(true);
-                }             
-                
+                }
             } catch (error) {
                 console.log(error);
             }
-            
         }
 
     }
 
     const handleSearchBtn = async () =>{
-        
         try {
             const response = await fetch('/searchBar', {
                 method: 'POST',
                 headers: {
-                    'Content-Type' : 'application/json' 
+                    'Content-Type' : 'application/json'
                 },
                 body: JSON.stringify({searchInput}),
             })
-            
             let data = await response.json();
             if(response.status === 201 && data.length > 0){
                 setSearchResult(data);
-            } 
+            }
             else{
                 setAlertTitle("Alert");
                 setAlertMessage("No matches found.");
                 setShowAlert(true);
-            } 
+            }
         } catch (error) {
             console.log(error);
         }
-        
     }
 
 
     const compareIds = () =>{
         let selfBtn = document.getElementById(state.id)
-        
+
         if(selfBtn){
             selfBtn.textContent = 'Own Profile';
             selfBtn.disabled = true;
@@ -124,28 +116,23 @@ const SearchMembers = ({props}) => {
     useEffect(()=>{
         compareIds();
     },[searchResult])
-   
 
     const handleRequestBtn = async (e) =>{
-        let personId = e.target.id;        
-       
+        let personId = e.target.id;
         try {
             const response = await fetch('/sendingRequest', {
                 method: 'POST',
                 headers: {
-                    'Content-Type' : 'application/json' 
-                }, 
+                    'Content-Type' : 'application/json'
+                },
                 body: JSON.stringify({personId}),
                 // body: searchInput
             })
-            
-    
             let data = await response.json();
-    
             if(response.status === 201 && data){
                 setAlertTitle("Alert");
                 setAlertMessage(data.message);
-                setShowAlert(true); 
+                setShowAlert(true);
                 props.setFetchData(data);
                 setShow(false);
                 setSearchInput("");
@@ -154,9 +141,8 @@ const SearchMembers = ({props}) => {
             else{
                 setAlertTitle("Alert");
                 setAlertMessage(data.message);
-                setShowAlert(true); 
+                setShowAlert(true);
             }
-            
         } catch (error) {
             console.log(error)
         }
@@ -170,14 +156,18 @@ const SearchMembers = ({props}) => {
         setSearchInput("");
         setSearchResult([]);
     }
- 
+
+    const handleDblClick = () => {
+        setSelectedUser(searchResult);
+      };
+
   return (
     <>
 
-        <ListGroup.Item className='newProjectBtn' onClick={() => setShow(true)}>    
+        <ListGroup.Item className='newProjectBtn' onClick={() => setShow(true)}>
             <i className='fa fa-search'></i>
             {' '}
-            Find Members      
+            Find Members
         </ListGroup.Item>
 
         <Modal show={show} onHide={handleCoseModal}>
@@ -185,7 +175,7 @@ const SearchMembers = ({props}) => {
                 <Modal.Title>Find Members</Modal.Title>
             </Modal.Header>
             <Modal.Body className='modalBody'>
-                <Row>    
+                <Row>
                     <Col>
                         <InputGroup className="mb-3">
                         <FormControl
@@ -216,7 +206,17 @@ const SearchMembers = ({props}) => {
                                     onError={(e)=>{e.target.onError = null; e.target.src = image_S1}}
                                     className="profileImages"
                                 />
-                                <h5>{searchResult.name}</h5>
+                                    <button onClick={handleDblClick}>
+                                        <h5>{searchResult.name}</h5>
+                                    </button>
+
+                                    {selectedUser && (
+                                        <div>
+                                        <h2>{selectedUser.name}</h2>
+                                        <p>{selectedUser.email}</p>
+                                        {/* Render other user details here */}
+                                        </div>
+                                    )}
                             </Col>
                         </Row>
                         <Row>
@@ -233,12 +233,6 @@ const SearchMembers = ({props}) => {
               </Row>
             </Modal.Body>
         </Modal>
-            
-
-
-
-
-            {/* Alert Modal */}
 
             <Modal size="sm" show={showAlert} onHide={handleAlertClose} backdrop="static" keyboard={false} aria-labelledby="example-modal-sizes-title-sm">
             <Modal.Header closeButton className='modalHeader'>
@@ -251,9 +245,7 @@ const SearchMembers = ({props}) => {
                 <Button className='saveBtn' onClick={handleAlertClose}>Ok</Button> 
             </Modal.Footer>
             </Modal>
-        
-           
-        
+
     </>
   )
 }

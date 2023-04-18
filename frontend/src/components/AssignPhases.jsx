@@ -306,12 +306,6 @@ const AssignPhases = ({projectData}) => {
         </Modal>
 
 
-
-
-
-
-        {/* add Members */}
-
         <Modal size="sm" show={smShow} onHide={() => setSmShow(false)} aria-labelledby="example-modal-sizes-title-sm">
             <Modal.Header closeButton className='modalHeader'>
                 <Modal.Title id="example-modal-sizes-title-sm">
@@ -374,11 +368,6 @@ const AssignPhases = ({projectData}) => {
             </Modal>
     
 
-
-
-
-            {/* Update Selected Phase */}
-
             <Modal size="sm" show={smShowUpdate} onHide={() => setSmShowUpdate(false)} aria-labelledby="example-modal-sizes-title-sm">
                 <Modal.Header closeButton className='modalHeader'>
                     {selectedphaseForUpdate ?
@@ -428,9 +417,6 @@ const AssignPhases = ({projectData}) => {
 
 
 
-
-
-             {/* Alert Modal */}
 
              <Modal size="sm" show={showAlert} onHide={handleAlertClose} backdrop="static" keyboard={false} aria-labelledby="example-modal-sizes-title-sm">
             <Modal.Header closeButton className='modalHeader'>

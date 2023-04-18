@@ -149,10 +149,10 @@ const Signup = () => {
         let checkPass = userPassword.length > 7;
         let checkCnfrmPass = userCnfrmPass.length > 7;
         let checkBothPass = userPassword === userCnfrmPass;
-        let checkRegNo = registrationNo.length > 0 && registrationNo.length < 15;
+        let checkRegNo = registrationNo.length > 0 && registrationNo.length < 11;
 
 
-        if(checkName && nameRegEx && emailRegEx && checkPass && checkCnfrmPass && checkBothPass && userImage && userType ){
+        if(checkName && nameRegEx && emailRegEx && checkPass && checkCnfrmPass && checkBothPass && userImage && userType){
             
             let formData = new FormData();
             
@@ -199,9 +199,6 @@ const Signup = () => {
 
     }
 
-
-
-
     return (
         <>
             <Container  className='background2' fluid>
@@ -241,7 +238,7 @@ const Signup = () => {
                         </Container>
                     </Row>
                     <br></br>
-                    <Row>
+                    {/*<Row>
                         <Container className='googleBtnCont'>
                             <Row className="justify-content-md-center">
                                 <Col sm lg="6">
@@ -254,8 +251,7 @@ const Signup = () => {
                                 </Col>
                             </Row>
                         </Container>
-                    </Row>
-                    <br></br>
+                    </Row>*/}
                     <Row>
                         <Container className='headingCont'>
                             <p className='accountTxt'>Need an account? <i className='signUpTxt' onClick={()=>setShowModal(true)}>Sign Up</i></p>
@@ -264,13 +260,6 @@ const Signup = () => {
                     <br></br>
                 </Container>
 
-
-
-
-
-
-
-                {/* Signup Modal */}
 
 
                 <Modal show={showModal} onHide={handleClose}>
@@ -290,27 +279,26 @@ const Signup = () => {
                                     We'll never share your email with anyone else.
                                 </Form.Text>
                             </Form.Group>
-                            <Form.Group className   ="mb-3">
-                                <Form.Label>Registration No</Form.Label>
-                                <Form.Control type="text" placeholder="Enter registration no." value={registrationNo} onChange={(e) => setRegistrationNo(e.target.value)} />
-                            </Form.Group>
                             <Form.Group className="mb-3">
                             <Form.Label>User Type</Form.Label>
-                                <Form.Check type="radio" label="Student" name="userTypeRadio" value="student" checked={userType === 'student'} onChange={handleUserTypeChange} />
-                            <Form.Check type="radio" label="Supervisor"  name="userTypeRadio" value="supervisor" checked={userType === 'supervisor'} onChange={handleUserTypeChange}   />
-                        </Form.Group>
-                        {userType === 'student' && (
-                            <Form.Group controlId="mb-3">
-                                <Form.Label>CGPA</Form.Label>
-                                <Form.Control type="text" placeholder="Enter CGPA" value={cgpa} onChange={(e) => setCgpa(e.target.value)} />
+                            <br></br>
+                                <Form.Check type="radio" label="Student" name="userTypeRadio" value="student" checked={userType === 'student'} onChange={handleUserTypeChange} className="form-check-inline" />
+                                <Form.Check type="radio" label="Supervisor"  name="userTypeRadio" value="supervisor" checked={userType === 'supervisor'} onChange={handleUserTypeChange} className="form-check-inline"  />
                             </Form.Group>
-                        )}
-                        {userType === 'supervisor' && (
-                            <Form.Group controlId="mb-3">
-                                <Form.Label>Specialization</Form.Label>
-                                <Form.Control type="text" placeholder="Enter specialization" value={specialization} onChange={(e) => setSpecialization(e.target.value)} />
-                            </Form.Group>
-                        )}
+                                {userType === 'student' && (
+                                    <Form.Group controlId="mb-3">
+                                        <Form.Label>CGPA</Form.Label>
+                                        <Form.Control type="text" placeholder="Enter CGPA" value={cgpa} onChange={(e) => setCgpa(e.target.value)} />
+                                        <Form.Label>Registration No</Form.Label>
+                                        <Form.Control type="text" placeholder="Enter registration no." value={registrationNo} onChange={(e) => setRegistrationNo(e.target.value)} />
+                                    </Form.Group>
+                                )}
+                                {userType === 'supervisor' && (
+                                    <Form.Group controlId="mb-3">
+                                        <Form.Label>Specialization</Form.Label>
+                                        <Form.Control type="text" placeholder="Enter specialization" value={specialization} onChange={(e) => setSpecialization(e.target.value)} />
+                                    </Form.Group>
+                                )}
                             <Form.Group className="mb-3">
                                 <Form.Label>Profile image</Form.Label>
                                 <Form.Control type="file" name='profileImage' className='formInput' id='profileImage' ref={fileInputRef} onChange={handleFiles}/>
@@ -323,8 +311,10 @@ const Signup = () => {
                                 <Form.Label>Confirm Password</Form.Label>
                                 <Form.Control type="password" className='formInput' value={userCnfrmPass} onChange={(e)=>setUserCnfrmPass(e.target.value)} placeholder="Confirm Password" />
                             </Form.Group>
-                                <br></br>
                             <Form.Group className="mb-3" >
+                                <Form.Text className="text-muted">
+                                        Check Before Submitting details are not edited
+                                </Form.Text>
                                 <Button className='formSignInBtn' variant="primary" type="submit" >
                                     Signup
                                 </Button>
@@ -334,11 +324,6 @@ const Signup = () => {
                 </Modal>
             </Container>
 
-
-
-
-
-             {/* Alert Form Modal */}
 
              <Modal size="sm" show={showAlertForm} onHide={handleAlertFormClose} aria-labelledby="example-modal-sizes-title-sm">
             <Modal.Header closeButton className='modalHeader'>
@@ -354,12 +339,6 @@ const Signup = () => {
                 <Button className='saveBtn' onClick={handleAlertFormClose}>Ok</Button> 
             </Modal.Footer>
             </Modal>
-
-
-
-
-
-            {/* Alert Modal */}
 
             <Modal size="sm" show={showAlert} onHide={handleAlertClose} backdrop="static" keyboard={false} aria-labelledby="example-modal-sizes-title-sm">
             <Modal.Header closeButton className='modalHeader'>

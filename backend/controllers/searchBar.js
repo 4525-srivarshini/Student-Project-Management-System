@@ -1,18 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const userAuth = require("../middelware/userAuth");
-
-
 const User = require('../models/userSchema');
 
 
-module.exports = router.post('/searchBar', userAuth, async(req, res)=>{
+module.exports = router.post('/searchBar', userAuth, async(req, res) => {
     const searchInput = req.body.searchInput;
-    
-    const findUsers = await User.find({ $text: {$search: searchInput} });
-  
+
+    const findUsers = await User.find({ $text: { $search: searchInput } });
+
     try {
-        if(findUsers){
+        if (findUsers) {
             res.status(201).send(findUsers);
         }
     } catch (error) {

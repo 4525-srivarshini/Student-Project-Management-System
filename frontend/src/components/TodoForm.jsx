@@ -310,13 +310,13 @@ const TodoForm = ({clickedTask}) => {
                                     <i className="fa fa-check"></i> 
                                 </Button>
                             </Form.Group>
-                            {/* <Form.Group className="mb-3" >
+                             <Form.Group className="mb-3" >
                                 <Form.Label className='formTxt'>Status</Form.Label>
                                 <Form.Select id='updateStatus' className='formInput' aria-label="Default select example"> 
                                     <option className='listOption'>Pending</option>                
                                     <option className='listOption'>Completed</option>                
                                 </Form.Select>
-                            </Form.Group> */}
+                            </Form.Group> 
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" >
@@ -347,17 +347,17 @@ const TodoForm = ({clickedTask}) => {
                         <Col sm lg="6">
                             <Form.Group className="mb-3 inputGroup" >
                                 <Form.Label className='formTxt'>Due Date</Form.Label>
-                                <Form.Control type="date" id='date' className='formInput' placeholder="date" />
+                                <Form.Control type="date" id='date' className='formInput' placeholder="date" min={new Date().toISOString().split('T')[0]}  />
                             </Form.Group>
                         </Col>
                         <Col sm lg="6">
                             <Form.Group className="mb-3 inputGroup" >
                                 <Form.Label className='formTxt'>Category</Form.Label>
-                                <Button className="addCatBadge" onClick={() => setSmShow(true)}><i className="fa fa-plus" ></i></Button>
+                                <Button className="addCatBadge" onClick={() => setSmShow(true)}>Add</Button>
                                 <Form.Select id='category' className='formInput' aria-label="Default select example">  
                                     <option className='listOption'>Default</option>               
-                                    <option className='listOption'>Personal</option>               
-                                    <option className='listOption'>Important</option>               
+                                    <option className='listOption'>Personal</option>
+
                                     {taskCat.map( (taskCat, index) =>
                                         <option className='listOption' key={index}>{taskCat.category}</option>
                                     )}
@@ -367,7 +367,7 @@ const TodoForm = ({clickedTask}) => {
                     </Row>
                     <Row className="justify-content-md-center">
                         <Col sm lg="6">
-                            <Button className='submitBtn' variant="primary" type="submit" ><i className="fa fa-plus"></i></Button>                
+                            <Button className='submitBtn' variant="primary" type="submit" >Add</Button>                
                         </Col>
                     </Row>
                 </Container>
