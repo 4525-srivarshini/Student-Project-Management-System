@@ -25,10 +25,10 @@ const MainNavbar = () => {
         <Nav.Link href="#todos" className='navLinks'><MyNotes/></Nav.Link>
         <Nav.Link href="#projects" className='navLinks'><DisplayProjects/></Nav.Link>
         <Nav.Link href="#messages" className='navLinks'><Messages/></Nav.Link>
-        <Nav.Link href="#uploadFiles" className='navLinks'><UploadFiles/></Nav.Link>
         <Nav.Link href="#calendar" className='navLinks'><Eventscalendar/></Nav.Link>
         <Nav.Link href="#searchMembers" className='navLinks'><Notifications/></Nav.Link>         
         <Nav.Link href="#searchMembers" className='navLinks'><Profile/></Nav.Link>
+        <Nav.Link href="#uploadFiles" className='navLinks'><UploadFiles/></Nav.Link>
       </Nav>
     </Navbar.Collapse>
   </Container>

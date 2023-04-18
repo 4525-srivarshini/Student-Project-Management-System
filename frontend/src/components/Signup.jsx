@@ -3,8 +3,7 @@ import {useNavigate} from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import '../stylesheets/login.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Container, Card, CardGroup, ProgressBar, Navbar, Nav, NavDropdown, Form, Image, Button, ListGroup, Offcanvas, InputGroup, Modal } from 'react-bootstrap';
-
+import { Row, Col, Container, Card, CardGroup, ProgressBar, Navbar, Nav, NavDropdown, Form, Image, Button, ListGroup, OverlayTrigger,Offcanvas, InputGroup,Tooltip, Modal } from 'react-bootstrap';
 import { UserContext } from '../App';
 
 const Signup = () => {
@@ -29,6 +28,8 @@ const Signup = () => {
     const [userType, setUserType] = useState('student');
     const [cgpa, setCgpa] = useState('');
     const [specialization, setSpecialization] = useState('');
+    const [showPassword, setShowPassword] = useState('');
+    const [showCnfrmPass, setShowCnfrmPass] = useState('');
 
     const handleUserTypeChange = e => {
         setUserType(e.target.value);
@@ -142,7 +143,7 @@ const Signup = () => {
     const handleSingupSubmit = async (e) =>{
         e.preventDefault();
         const form = e.currentTarget;
-
+    
         let nameRegEx = /^[A-Za-z\s]*$/.test(userName);
         let checkName = userName.length > 0 && userName.length < 15;
         let emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail);
@@ -150,62 +151,95 @@ const Signup = () => {
         let checkCnfrmPass = userCnfrmPass.length > 7;
         let checkBothPass = userPassword === userCnfrmPass;
         let checkRegNo = registrationNo.length > 0 && registrationNo.length < 11;
-
-
-        if(checkName && nameRegEx && emailRegEx && checkPass && checkCnfrmPass && checkBothPass && userImage && userType){
-            
-            let formData = new FormData();
-            
-            formData.append('userName', userName);
-            formData.append('userEmail', userEmail);
-            formData.append('userPassword', userPassword);
-            formData.append('userCnfrmPass', userCnfrmPass);
-            formData.append('registrationNo', registrationNo);
-            formData.append('userImage', userImage);
-            formData.append('userType', userType);
-            formData.append('cgpa', cgpa);
-            formData.append('specialization', specialization);
-            
-            try {
-                const response = await fetch("/createNewUser", {
-                    method: "POST",
-                    body: formData
+        
+        let errorMessage = "";
+    
+        if(!checkName){
+            errorMessage += "Name is incorrect. \n";
+        }
+        else if(!nameRegEx){
+            errorMessage += "Name contains invalid characters.\n ";
+        }
+    
+        if(!emailRegEx){
+            errorMessage += "Email is invalid. \n";
+        }
+    
+        if(!checkPass){
+            errorMessage += "Password is incorrect. \n";
+        }
+    
+        if(!checkCnfrmPass){
+            errorMessage += "Confirmation password is incorrect.\n ";
+        }
+    
+        if(!checkBothPass){
+            errorMessage += "Passwords do not match.\n ";
+        }
+    
+        if(!checkRegNo){
+            errorMessage += "Registration number is incorrect.\n ";
+        }
+    
+        if(errorMessage){
+            setAlertTitle("Alert")
+            setAlertMessage(errorMessage);
+            setShowAlert(true);
+            return;
+        }
+    
+        let formData = new FormData();
+                
+        formData.append('userName', userName);
+        formData.append('userEmail', userEmail);
+        formData.append('userPassword', userPassword);
+        formData.append('userCnfrmPass', userCnfrmPass);
+        formData.append('registrationNo', registrationNo);
+        formData.append('userImage', userImage);
+        formData.append('userType', userType);
+        formData.append('cgpa', cgpa);
+        formData.append('specialization', specialization);
+    
+        try {
+            const response = await fetch("/createNewUser", {
+                method: "POST",
+                body: formData
                       
-                });
-                const data = await response.json();
-
-                if(response.status === 201 && data){
-                    setAlertTitle("Alert")
-                    setAlertMessage(data.message);
-                    setShowAlert(true);
-
-                    setUserName("");
-                    setUserEmail("");
-                    setUserPassword("");
-                    setUserCnfrmPass("");
-                    fileInputRef.current.value = null;
-                    form.reset();
-                    setShowModal(false);
-                }
-
-            } catch (error) {
-                console.log(error);
+            });
+            const data = await response.json();
+    
+            if(response.status === 201 && data){
+                setAlertTitle("Alert")
+                setAlertMessage(data.message);
+                setShowAlert(true);
+    
+                setUserName("");
+                setUserEmail("");
+                setUserPassword("");
+                setUserCnfrmPass("");
+                fileInputRef.current.value = null;
+                form.reset();
+                setShowModal(false);
             }
-
+    
+        } catch (error) {
+            console.log(error);
         }
-        else{
-            setShowAlertForm(true);
-        }
-
+    
     }
+    
 
     return (
         <>
             <Container  className='background2' fluid>
                 <Container className='signInCont'>
                     <Row>
+                    <Container className='headingCont'>
+                            <h4>Student Project Management System</h4> 
+                        </Container>
+                        <br></br><br></br>
                         <Container className='headingCont'>
-                            <h2>SignIn</h2> 
+                            <h4>SignIn</h4> 
                         </Container>
                     </Row>
                     <Row>
@@ -213,14 +247,14 @@ const Signup = () => {
                             <Form method='POST' onSubmit={handleSinginSubmit}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Email address</Form.Label>
-                                    <Form.Control type="email" className='formInput' value={userEmail} onChange={(e)=>setUserEmail(e.target.value)} placeholder="Enter email" />
+                                    <Form.Control type="email" className='formInput' value={userEmail} onChange={(e)=>setUserEmail(e.target.value)} placeholder="Enter email" required />
                                     <Form.Text className="text-muted">
                                         We'll never share your email with anyone else.
                                     </Form.Text>
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" className='formInput' value={userPassword} onChange={(e)=>setUserPassword(e.target.value)} placeholder="Password" />
+                                    <Form.Control type="password" className='formInput' value={userPassword} onChange={(e)=>setUserPassword(e.target.value)} placeholder="Password" required />
                                 </Form.Group>
                                 <br></br>
                                 <Form.Group className="mb-3" >
@@ -229,12 +263,6 @@ const Signup = () => {
                                     </Button>
                             </Form.Group> 
                             </Form>
-                        </Container>
-                    </Row>
-                    <br></br>
-                    <Row>
-                        <Container className='orCont'>
-                            <p className='orTxt'>OR</p>
                         </Container>
                     </Row>
                     <br></br>
@@ -263,24 +291,24 @@ const Signup = () => {
 
 
                 <Modal show={showModal} onHide={handleClose}>
-                    <Modal.Header closeButton className='modalHeader'>
+                <Modal.Header closeButton className='modalHeader'>
+                        <Modal.Title>Student Project Management System</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Header className='modalHeader'>
                         <Modal.Title>Signup</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className='modalBody'>
                         <Form method='POST' onSubmit={handleSingupSubmit}>
                             <Form.Group className="mb-3" >
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control type="text" className='formInput' value={userName} onChange={(e)=>setUserName(e.target.value)}  placeholder="Enter your full name" />
+                                <Form.Label>Name *</Form.Label>
+                                <Form.Control type="text" className='formInput' value={userName} onChange={(e)=>setUserName(e.target.value)}  placeholder="Enter your full name" required/>
                             </Form.Group>
                             <Form.Group className="mb-3" >
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control type="email" className='formInput' value={userEmail} onChange={(e)=>setUserEmail(e.target.value)} placeholder="Enter email" />
-                                <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                                </Form.Text>
+                                <Form.Label>Email *</Form.Label>
+                                <Form.Control type="email" className='formInput' value={userEmail} onChange={(e)=>setUserEmail(e.target.value)} placeholder="Enter email" required />
                             </Form.Group>
                             <Form.Group className="mb-3">
-                            <Form.Label>User Type</Form.Label>
+                            <Form.Label>User Type *</Form.Label>
                             <br></br>
                                 <Form.Check type="radio" label="Student" name="userTypeRadio" value="student" checked={userType === 'student'} onChange={handleUserTypeChange} className="form-check-inline" />
                                 <Form.Check type="radio" label="Supervisor"  name="userTypeRadio" value="supervisor" checked={userType === 'supervisor'} onChange={handleUserTypeChange} className="form-check-inline"  />
@@ -295,22 +323,42 @@ const Signup = () => {
                                 )}
                                 {userType === 'supervisor' && (
                                     <Form.Group controlId="mb-3">
-                                        <Form.Label>Specialization</Form.Label>
+                                        <Form.Label>Specialization *</Form.Label>
                                         <Form.Control type="text" placeholder="Enter specialization" value={specialization} onChange={(e) => setSpecialization(e.target.value)} />
                                     </Form.Group>
                                 )}
                             <Form.Group className="mb-3">
-                                <Form.Label>Profile image</Form.Label>
-                                <Form.Control type="file" name='profileImage' className='formInput' id='profileImage' ref={fileInputRef} onChange={handleFiles}/>
+                                <Form.Label>Profile image *</Form.Label>
+                                <Form.Control type="file" name='profileImage' required className='formInput' id='profileImage' ref={fileInputRef} onChange={handleFiles}/>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Password *</Form.Label>
+                                <InputGroup>
+                                    <Form.Control type={showPassword ? "text" : "password"} required className='formInput' value={userPassword} onChange={(e)=>setUserPassword(e.target.value)} placeholder="Password" />
+                                    <OverlayTrigger
+                                    placement="top"
+                                    >
+                                    <InputGroup.Text onClick={()=>setShowPassword(!showPassword)}>{showPassword ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}</InputGroup.Text>
+                                    </OverlayTrigger>
+                                </InputGroup>
                             </Form.Group>
                             <Form.Group className="mb-3" >
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" className='formInput' value={userPassword} onChange={(e)=>setUserPassword(e.target.value)} placeholder="Password" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Confirm Password</Form.Label>
-                                <Form.Control type="password" className='formInput' value={userCnfrmPass} onChange={(e)=>setUserCnfrmPass(e.target.value)} placeholder="Confirm Password" />
-                            </Form.Group>
+                                <Form.Label>Confirm Password *</Form.Label>
+                                <InputGroup>
+                                    <Form.Control type={showCnfrmPass ? "text" : "password"} className='formInput' value={userCnfrmPass} required onChange={(e)=>setUserCnfrmPass(e.target.value)} placeholder="Confirm Password" />
+                                    <OverlayTrigger
+                                    placement="top"
+                                    overlay={
+                                        <Tooltip id={`tooltip-top`}>
+                                        Please enter the same password again to confirm it.
+                                        </Tooltip>
+                                    }
+                                    >
+                                    <InputGroup.Text onClick={()=>setShowCnfrmPass(!showCnfrmPass)}>{showCnfrmPass ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}</InputGroup.Text>
+                                    </OverlayTrigger>
+                                </InputGroup>
+                                </Form.Group>
+
                             <Form.Group className="mb-3" >
                                 <Form.Text className="text-muted">
                                         Check Before Submitting details are not edited

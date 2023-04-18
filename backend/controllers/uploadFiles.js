@@ -1,50 +1,37 @@
-const express = require("express");
-const multer = require("multer");
-const csv = require("csv-parser");
-const fs = require("fs");
-const mongoose = require("mongoose");
+const express = require('express');
+const router = express.Router();
+const csv = require('csv-parser');
+const fs = require('fs');
+const mongoose = require('mongoose');
+const User = require('../models/students');
 
 const app = express();
+app.use(express.json());
 
 
-// Multer Configuration
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, "uploads/");
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.originalname);
-    },
-});
+// Endpoint for uploading CSV file
+module.exports = router.post('/upload', (req, res) => {
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
 
-const upload = multer({ storage: storage });
-
-// Express Routes
-app.post("/upload-csv", upload.single("file"), (req, res) => {
-    const results = [];
-
-    fs.createReadStream(req.file.path)
+    // Read the uploaded CSV file
+    const file = req.files.file;
+    const data = [];
+    fs.createReadStream(file.tempFilePath)
         .pipe(csv())
-        .on("data", (data) => results.push(data))
-        .on("end", () => {
-            const MyModel = mongoose.model("MyModel", {
-                name: String,
-                age: Number,
-                gender: String,
-            });
-
-            MyModel.insertMany(results, (err, docs) => {
-                if (err) {
+        .on('data', (row) => {
+            data.push(row);
+        })
+        .on('end', () => {
+            // Save the data to MongoDB
+            Users.create(data)
+                .then(() => {
+                    res.send('Data uploaded successfully.');
+                })
+                .catch((err) => {
                     console.error(err);
-                    res.status(500).send("Error uploading CSV file to database");
-                } else {
-                    console.log("CSV file uploaded to database successfully");
-                    res.status(200).send("CSV file uploaded to database successfully");
-                }
-            });
+                    res.status(500).send('Error uploading data.');
+                });
         });
-});
-
-app.listen(5000, () => {
-    console.log("Server started on port 5000");
 });
