@@ -1,26 +1,28 @@
-.todoModel {
+.todoModel{
     /* color: black; */
     text-decoration: solid;
 }
 
-.todosList {
+.todosList{
     /* background: linear-gradient(to right, #0f2027, #203a43, #2c5364); */
     background-color: transparent;
-    color: dodgerblue;
+    color:white;
 }
+ 
 
-.todosContainer {
-    border-top: 1px solid #dad9d7;
+.todosContainer{
+
+    border-top:1px solid black ;
     margin-top: 5%;
     margin-left: 0% !important;
 }
 
-.todoOffCanvas {
-    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-    color: #dad9d7;
+.todoOffCanvas{
+    background: dodgerblue;
+    color: whitesmoke;
 }
 
-.badgeList {
+.badgeList{
     background-color: transparent !important;
-    color: #dad9d7;
+    color:white;
 }

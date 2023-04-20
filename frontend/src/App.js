@@ -7,15 +7,19 @@ import Signup from "./components/Signup";
 
 export const UserContext = createContext();
 
-function App() {
+const App = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
+    const setUserType = (userType) => {
+        dispatch({ type: 'SET_USER_TYPE', payload: userType });
+    };
+
     return ( <
-        BrowserRouter >
-        <
         UserContext.Provider value = {
-            { state, dispatch }
+            { state, dispatch, setUserType }
         } >
+        <
+        BrowserRouter >
         <
         Routes >
         <
@@ -25,10 +29,12 @@ function App() {
         Route exact path = "/login"
         element = { < Signup / > }
         /> < /
-        Routes > <
-        /UserContext.Provider> < /
-        BrowserRouter >
+        Routes >
+
+        <
+        /BrowserRouter> < /
+        UserContext.Provider >
     );
-}
+};
 
 export default App;

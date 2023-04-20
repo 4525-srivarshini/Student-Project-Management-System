@@ -47,7 +47,7 @@ const ProjectChat = ({projectData}) => {
         <Modal show={show} onHide={() => setShow(false)} >
             <Modal.Header closeButton className='modalHeader'>
                 {projectData ?
-                    <Modal.Title>{projectData.projectTitle}</Modal.Title>
+                    <Modal.Title>{projectData.teamNo}</Modal.Title>
                 :
                     <Modal.Title>Selected Project</Modal.Title>
                 }   

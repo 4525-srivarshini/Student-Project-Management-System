@@ -1,76 +1,78 @@
-.titleSelection {
+.titleSelection{
     text-align: center;
 }
 
-.projectListItem {
+.projectListItem{
     /* border: 1px solid rgba(13,110,253,255); */
     border-radius: 10px !important;
 }
 
-.selectedListItem {
+.selectedListItem{
     text-align: center;
     cursor: pointer;
-    background-color: #f0ae4e;
-    ;
+    background-color: #f0ae4e;;
     color: black !important;
     border: 1px solid #f0ae4e;
     border-radius: 25px 10px 25px 10px !important;
 }
 
-.selectedListItem:hover {
+.selectedListItem:hover{
+    background-color: #f0ae4e;
+    box-shadow: 0px 0px 10px 1px #f0ae4e; 
+    border: 1px solid #f0ae4e;
+}
+  
+.selectedListItem:focus{
     background-color: #f0ae4e;
     box-shadow: 0px 0px 10px 1px #f0ae4e;
     border: 1px solid #f0ae4e;
 }
 
-.selectedListItem:focus {
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border: 1px solid #f0ae4e;
-}
-
-.warningTxt {
+.warningTxt{
     color: red;
 }
 
-.title2 {
+.title2{
     margin-left: auto;
     width: 30%;
-    word-break: normal;
+    word-break:normal;
     text-align: justify;
 }
 
-.assignBtn {
+.assignBtn{
     color: #f0ae4e;
     text-decoration: underline;
     cursor: pointer;
 }
 
-.assignBtn:hover {
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border-radius: 25px 10px 25px 10px;
+.assignBtn:hover{
+    box-shadow: 0px 0px 10px 1px #f0ae4e; 
+    border-radius: 25px 10px 25px 10px ;
 }
 
-.listPhase {
+.listPhase{
     border: none;
     background-color: transparent;
-    color: black;
+    color: #dad9d7;
 }
 
-.removeBtnPhase {
+
+.removeBtnPhase{
     cursor: pointer;
     color: #f0ae4e;
     float: right;
     margin-top: 5px;
 }
 
-.removeBtnPhase:hover {
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
+.removeBtnPhase:hover{
+   
+    box-shadow: 0px 0px 10px 1px #f0ae4e; 
 }
 
-.phaseSaveBtn {
-    background-color: #f0ae4e;
-    ;
+
+
+.phaseSaveBtn{
+    background-color: #f0ae4e;;
     color: black;
     width: 8rem;
     margin: auto;
@@ -78,23 +80,25 @@
     border-radius: 25px 10px 25px 10px !important;
 }
 
-.phaseSaveBtn:hover {
+
+.phaseSaveBtn:hover{
     background-color: #f0ae4e;
     border: 1px solid #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
+    box-shadow: 0px 0px 10px 1px #f0ae4e; 
     color: black;
-}
-
-.phaseSaveBtn:focus {
+  }
+  
+.phaseSaveBtn:focus{
     background-color: #f0ae4e;
     box-shadow: 0px 0px 10px 1px #f0ae4e;
     border: #f0ae4e;
     color: black;
 }
 
-.saveBtn {
-    background-color: #f0ae4e;
-    ;
+
+
+.saveBtn{
+    background-color: #f0ae4e;;
     color: black;
     width: 40%;
     margin: auto;
@@ -102,113 +106,122 @@
     border-radius: 25px 10px 25px 10px !important;
 }
 
-.saveBtn:hover {
+
+.saveBtn:hover{
     background-color: #f0ae4e;
     border: 1px solid #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
+    box-shadow: 0px 0px 10px 1px #f0ae4e; 
     color: black;
-}
-
-.saveBtn:focus {
+  }
+  
+.saveBtn:focus{
     background-color: #f0ae4e;
     box-shadow: 0px 0px 10px 1px #f0ae4e;
     border: #f0ae4e;
     color: black;
 }
 
-.completedBtn {
+.completedBtn{
     float: right;
     color: #f0ae4e;
     cursor: pointer;
     border-radius: 20px;
 }
 
-.completedBtn:hover {
+.completedBtn:hover{
     background-color: #f0ae4e;
     box-shadow: 0px 0px 10px 1px #f0ae4e;
     border: #f0ae4e;
     color: black;
 }
 
-.notificationImage {
+
+.notificationImage{
     width: 20%;
     border-radius: 50px !important;
 }
 
-.projectListItem {
+
+.projectListItem{
     background-color: transparent !important;
-    color: black;
-    border: 1px solid dodgerblue;
+    color: #dad9d7;
+    border: 1px solid #dad9d7;
     border-radius: 25px 10px 25px 10px !important;
-    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.63);
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.63); 
     cursor: pointer;
 }
 
-.projectListItem:hover {
+
+.projectListItem:hover{
     border: 1px solid #f0ae4e;
     box-shadow: 0px 0px 10px 1px #f0ae4e;
     cursor: pointer;
 }
 
-.dropBtn {
+
+.dropBtn{
     cursor: pointer;
-    background-color: #f0ae4e;
-    ;
+    background-color: #f0ae4e;;
     color: black !important;
     border: 1px solid #f0ae4e;
     border-radius: 25px 10px 25px 10px !important;
 }
 
-.dropBtn:hover {
+
+.dropBtn:hover{
+    background-color: #f0ae4e;
+    box-shadow: 0px 0px 10px 1px #f0ae4e; 
+    border: 1px solid #f0ae4e;
+}
+  
+.dropBtn:focus{
     background-color: #f0ae4e;
     box-shadow: 0px 0px 10px 1px #f0ae4e;
     border: 1px solid #f0ae4e;
 }
 
-.dropBtn:focus {
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border: 1px solid #f0ae4e;
-}
 
-.dropDownCont {
+.dropDownCont{
     background-color: #dad9d7;
 }
 
-.memberLists {
+
+.memberLists{
     background-color: transparent !important;
     color: #dad9d7;
 }
 
-.toastMain {
+
+.toastMain{
     background-color: transparent;
     border: 1px solid #dad9d7;
     border-radius: 25px 10px 25px 10px !important;
-    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.63);
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.63); 
     cursor: pointer;
 }
 
-.toastHeader {
+.toastHeader{
     background-color: transparent;
     color: #dad9d7;
 }
 
-.downloadBtn {
+
+.downloadBtn{
     cursor: pointer;
-    background-color: #f0ae4e;
-    ;
+    background-color: #f0ae4e;;
     color: black !important;
     border: 1px solid #f0ae4e;
     float: right;
 }
 
-.downloadBtn:hover {
+
+.downloadBtn:hover{
     background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
+    box-shadow: 0px 0px 10px 1px #f0ae4e; 
     border: 1px solid #f0ae4e;
 }
-
-.downloadBtn:focus {
+  
+.downloadBtn:focus{
     background-color: #f0ae4e;
     box-shadow: 0px 0px 10px 1px #f0ae4e;
     border: 1px solid #f0ae4e;

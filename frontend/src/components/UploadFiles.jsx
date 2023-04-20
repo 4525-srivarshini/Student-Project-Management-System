@@ -11,6 +11,24 @@ const UploadFiles = () => {
     setShowAlert(true);
   };
 
+  const handleFileUpload = (event) => {
+    event.preventDefault();
+    const file = event.target[0].files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch('/upload', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      console.log('File uploaded successfully');
+    })
+    .catch(error => {
+      console.error('Error uploading file', error);
+    });
+  }
+
   return (
     <>
       <ListGroup.Item className='navList' onClick={handleShow}>
@@ -24,8 +42,8 @@ const UploadFiles = () => {
           <Modal.Title>Upload Files</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <form action="/upload" method="post" enctype="multipart/form-data">
-                <input type="file" name="file"  multiple required/>
+            <form onSubmit={handleFileUpload}>
+                <input type="file" name="file" multiple required/>
                 <button type="submit">Upload</button>
             </form>
         </Modal.Body>

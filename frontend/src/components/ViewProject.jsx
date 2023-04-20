@@ -166,8 +166,8 @@ const ViewProject = ({projectData}) => {
                                 <ListGroup.Item className='phaseListItem'><b>Project Creator: </b></ListGroup.Item>
                             }
                             
-                            <ListGroup.Item className='phaseListItem'><b>Title: </b> {projectData.projectTitle} </ListGroup.Item>
-                            <ListGroup.Item className='phaseListItem'><b>Discription: </b> {projectData.projectDiscription}</ListGroup.Item>
+                            <ListGroup.Item className='phaseListItem'><b>Title: </b> {projectData.teamNo} </ListGroup.Item>
+                            <ListGroup.Item className='phaseListItem'><b>Discription: </b> {projectData.projectTitle}</ListGroup.Item>
                             <ListGroup.Item className='phaseListItem'><b>Start Date: </b> {projectData.startDate.substring(0,10)}</ListGroup.Item>
                             <ListGroup.Item className='phaseListItem'><b>Due Date: </b> {projectData.dueDate.substring(0,10)}</ListGroup.Item>
                             <ListGroup.Item className='phaseListItem'><b>Type: </b> {projectData.projectType}</ListGroup.Item>

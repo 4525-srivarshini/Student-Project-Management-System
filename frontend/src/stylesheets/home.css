@@ -1,6 +1,8 @@
-.background {
+
+.background{
     /* background-color: #282c34; */
-    /*background: linear-gradient(to right, #0f2027, #203a43, #2c5364) !important;*/
+    background: white !important;
+   
     background-size: 100% 100%;
     width: 100vw;
     height: 100vh;
@@ -9,9 +11,10 @@
     padding: 0%;
 }
 
-.background2 {
+
+.background2{
     /* background-color: #282c34; */
-    /*background: linear-gradient(to right, #0f2027, #203a43, #2c5364) !important;*/
+    background: whitesmoke !important;
     background-size: 100% 100%;
     width: 100vw;
     height: 100vh;
@@ -20,79 +23,82 @@
     padding: 0%;
 }
 
-.toggleBtn {
+
+.toggleBtn{
     height: 10vh;
-    align-self: flex-end;
+    align-self:flex-end;
     margin-left: 20%;
 }
 
-.tasksContainer {
+.tasksContainer{
     margin-left: 20% !important;
 }
 
-.modalHeader {
-    /*background: linear-gradient(to right, #0f2027, #203a43, #2c5364);*/
-    color: dodgerblue;
-    border: 1px solid #dad9d7;
+
+.modalHeader{
+    background:orange;
+    color: black;
+    border: 1px solid white;
     border-bottom: none;
 }
 
-.modalBody {
-    /*background: linear-gradient(to right, #0f2027, #203a43, #2c5364);*/
-    color: dodgerblue;
-    border: 1px solid #dad9d7;
+.modalBody{
+    background:dodgerblue;
+    color:black;
+    border: 1px solid white;
     border-top: none;
 }
 
-.modalBodyStatic {
-    /*background: linear-gradient(to right, #0f2027, #203a43, #2c5364);*/
-    color: dodgerblue;
-    border: 1px solid #dad9d7;
+.modalBodyStatic{
+    background: rgb(173, 218, 230);
+    color: black;
+    border: 1px solid white;
     border-top: none;
     border-bottom: none;
 }
 
-.modalFooter {
-    /*background: linear-gradient(to right, #0f2027, #203a43, #2c5364);*/
-    color: dodgerblue;
+
+.modalFooter{
+    background: dodgerblue;
+    color: #dad9d7;
     border: 1px solid #dad9d7;
     border-top: none;
 }
+
+
+
 
 .modalBody::-webkit-scrollbar {
-    width: 8px;
-    /* width of the entire scrollbar */
+    width: 8px;               /* width of the entire scrollbar */
 }
-
+  
 .modalBody::-webkit-scrollbar-track {
-    background: transparent;
-    /* color of the tracking area */
+    background: transparent;        /* color of the tracking area */
+}
+  
+.modalBody::-webkit-scrollbar-thumb {
+    background-color: #f09204;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid #dad9d7;  /* creates padding around scroll thumb */
 }
 
-.modalBody::-webkit-scrollbar-thumb {
-    background-color: #f09204;
-    /* color of the scroll thumb */
-    border-radius: 20px;
-    /* roundness of the scroll thumb */
-    border: 3px solid #dad9d7;
-    /* creates padding around scroll thumb */
-}
+
+
 
 .modalBodyStatic::-webkit-scrollbar {
-    width: 8px;
-    /* width of the entire scrollbar */
+    width: 8px;               /* width of the entire scrollbar */
 }
-
+  
 .modalBodyStatic::-webkit-scrollbar-track {
-    background: transparent;
-    /* color of the tracking area */
+    background: transparent;        /* color of the tracking area */
+}
+  
+.modalBodyStatic::-webkit-scrollbar-thumb {
+    background-color: #f09204;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid #0c0c0c;  /* creates padding around scroll thumb */
 }
 
-.modalBodyStatic::-webkit-scrollbar-thumb {
-    background-color: #f09204;
-    /* color of the scroll thumb */
-    /*border-radius: 20px;*/
-    /* roundness of the scroll thumb */
-    border: 3px solid #dad9d7;
-    /* creates padding around scroll thumb */
+.img{
+    padding: 100px
 }

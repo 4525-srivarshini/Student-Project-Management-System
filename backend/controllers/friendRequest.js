@@ -20,6 +20,7 @@ module.exports = router.get('/getFriends', userAuth, async(req, res) => {
                 _id: userProfile._id,
                 name: userProfile.name,
                 image: userProfile.image,
+                registrationNo: userProfile.registrationNo,
             }
             friendsProfile.push(userObj)
         })

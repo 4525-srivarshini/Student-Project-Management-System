@@ -31,8 +31,8 @@ const UpdateProject = ({projectData}) => {
     const [desigId, setDesigId] = useState("");
     const [projectFiles, setProjectFiles] = useState([]);
     const [projectDetails, setProjectDetails] = useState({
+        teamNo : "",
         projectTitle : "",
-        projectDiscription : "",
         startDate : "",
         dueDate : "",
         projectType : "",
@@ -258,14 +258,14 @@ const UpdateProject = ({projectData}) => {
 
         let startDate = document.getElementById("startDate");
         let dueDate = document.getElementById("dueDate");
-        let projectDiscription = document.getElementById("projectDiscription");
         let projectTitle = document.getElementById("projectTitle");
+        let teamNo = document.getElementById("teamNo");
         let projectType = document.getElementById("projectType");
         
         
         let formData = new FormData();
+        formData.append('teamNo', teamNo.value)
         formData.append('projectTitle', projectTitle.value)
-        formData.append('projectDiscription', projectDiscription.value)
         formData.append('startDate', startDate.value)
         formData.append('dueDate', dueDate.value)
         formData.append('projectType', projectType.value)
@@ -420,7 +420,7 @@ const UpdateProject = ({projectData}) => {
                     <Col>
                     <Form.Group className="mb-3" >
                         <Form.Label className='formTxt'>Update Title</Form.Label>
-                        <Form.Control type="text" name='projectTitle' className='formInput' id='projectTitle' defaultValue={projectData.currentProject.projectTitle} placeholder="Enter Task" />
+                        <Form.Control type="text" name='teamNo' className='formInput' id='teamNo' defaultValue={projectData.currentProject.teamNo} placeholder="Enter Task" />
                     </Form.Group>
                     </Col>
                     <Col>
@@ -439,7 +439,7 @@ const UpdateProject = ({projectData}) => {
                     <Col>
                     <Form.Group className="mb-3">
                         <Form.Label>Discription</Form.Label>
-                        <Form.Control as="textarea" rows={3} name='projectDiscription' className='formInput' id='projectDiscription' defaultValue={projectData.currentProject.projectDiscription}/>
+                        <Form.Control as="textarea" rows={3} name='projectTitle' className='formInput' id='projectTitle' defaultValue={projectData.currentProject.projectTitle}/>
                     </Form.Group>
                     </Col>
                 </Row>

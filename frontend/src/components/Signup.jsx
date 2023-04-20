@@ -150,7 +150,6 @@ const Signup = () => {
         let checkPass = userPassword.length > 7;
         let checkCnfrmPass = userCnfrmPass.length > 7;
         let checkBothPass = userPassword === userCnfrmPass;
-        let checkRegNo = registrationNo.length > 0 && registrationNo.length < 11;
         
         let errorMessage = "";
     
@@ -177,9 +176,6 @@ const Signup = () => {
             errorMessage += "Passwords do not match.\n ";
         }
     
-        if(!checkRegNo){
-            errorMessage += "Registration number is incorrect.\n ";
-        }
     
         if(errorMessage){
             setAlertTitle("Alert")
@@ -248,9 +244,6 @@ const Signup = () => {
                                 <Form.Group className="mb-3">
                                     <Form.Label>Email address</Form.Label>
                                     <Form.Control type="email" className='formInput' value={userEmail} onChange={(e)=>setUserEmail(e.target.value)} placeholder="Enter email" required />
-                                    <Form.Text className="text-muted">
-                                        We'll never share your email with anyone else.
-                                    </Form.Text>
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Password</Form.Label>
@@ -312,6 +305,7 @@ const Signup = () => {
                             <br></br>
                                 <Form.Check type="radio" label="Student" name="userTypeRadio" value="student" checked={userType === 'student'} onChange={handleUserTypeChange} className="form-check-inline" />
                                 <Form.Check type="radio" label="Supervisor"  name="userTypeRadio" value="supervisor" checked={userType === 'supervisor'} onChange={handleUserTypeChange} className="form-check-inline"  />
+                                <Form.Check type="radio" label="admin"  name="userTypeRadio" value="admin" checked={userType === 'admin'} onChange={handleUserTypeChange} className="form-check-inline"  />
                             </Form.Group>
                                 {userType === 'student' && (
                                     <Form.Group controlId="mb-3">

@@ -50,18 +50,6 @@ const createTransporter = async() => {
     return transporter;
 };
 
-
-const sendEmail = async(emailOptions) => {
-    try {
-        let emailTransporter = await createTransporter();
-        await emailTransporter.sendMail(emailOptions);
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-
-
 module.exports = router.post('/googleSignIn', async(req, res) => {
     const recievedToken = req.body.jwtIDToken
 
@@ -210,6 +198,18 @@ module.exports = router.post('/createNewUser', upload.single("userImage"), async
                     imageSize: userImage.size,
                     userType: userType,
                     specialization: specialization
+                });
+            } else if (userType === 'admin') {
+                data = new User({
+                    name: userName,
+                    email: userEmail,
+                    userPassword: userPassword,
+                    userCnfrmPass: userCnfrmPass,
+                    imageName: userImage.originalname,
+                    image: userImage.path,
+                    imageType: userImage.mimetype,
+                    imageSize: userImage.size,
+                    userType: userType,
                 });
             } else {
                 return res.status(422).json({ error: "Invalid user type" })

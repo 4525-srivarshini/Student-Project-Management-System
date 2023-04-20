@@ -31,8 +31,8 @@ const Projects = ({props}) => {
     const [projectSelected, setProjectSelected] = useState();
     const [projectFiles, setProjectFiles] = useState([]);
     const [projectDetails, setProjectDetails] = useState({
+        teamNo : "",
         projectTitle : "",
-        projectDiscription : "",
         startDate : "",
         dueDate : "",
         projectType : "",
@@ -66,36 +66,32 @@ const Projects = ({props}) => {
             let singleId = document.getElementById(membersIds)
             addDesig.push({id: membersIds, desg: singleId.value})
         })
-        
         let formData = new FormData();
+        formData.append('teamNo', projectDetails.teamNo)
         formData.append('projectTitle', projectDetails.projectTitle)
-        formData.append('projectDiscription', projectDetails.projectDiscription)
         formData.append('startDate', projectDetails.startDate)
         formData.append('dueDate', projectDetails.dueDate)
         formData.append('projectType', projectDetails.projectType)
         formData.append('projectMembers', JSON.stringify(members))
         formData.append('projectDesig', JSON.stringify(addDesig))
         formData.append('projectPhases', JSON.stringify(projectPhases))
-        
         for(let i=0; i < projectFiles.length; i++){
             formData.append('projectFiles', projectFiles[i])
         }
-          
         console.log(projectFiles)
-        if(projectPhases.length > 0 && projectDetails.projectTitle && projectDetails.startDate &&  projectDetails.dueDate && projectDetails.projectDiscription && projectDetails.projectType){
+        if(projectPhases.length > 0 && projectDetails.teamNo && projectDetails.startDate &&  projectDetails.dueDate && projectDetails.projectTitle && projectDetails.projectType){
             try {
                 const response = await fetch("/createNewProject", {
                     method: "POST",
                     body: formData
-                      
                 });
 
                 const data = await response.json();
 
                 if(response.status === 201 && data){
                     setProjectDetails({
+                        teamNo : "",
                         projectTitle : "",
-                        projectDiscription : "",
                         startDate : "",
                         dueDate : "",
                         projectType : "",
@@ -110,17 +106,16 @@ const Projects = ({props}) => {
                     props.setFecthTasks(data);
                     setShow(false);
                 }
-                
+
             } catch (error) {
                 console.log(error);
             }
-            
         }
         else{
             setAlertTitle("Alert")
             setAlertMessage("Please fill all the fields.");
             setShowAlert(true);
-        } 
+        }
 
     }
 
@@ -161,7 +156,6 @@ const Projects = ({props}) => {
     const showSearchResult = () =>{
 
         if(txtInput === ""){
-            
             setAllfriends(friends) 
         }
         else{
@@ -184,9 +178,6 @@ const Projects = ({props}) => {
         showSearchResult();
     }
 
-
-    
-
     const addMember = (e) =>{
         let id = e.target.id;
 
@@ -201,38 +192,29 @@ const Projects = ({props}) => {
             }
             else{
                 let getProfile = allfriends.find(element => element._id === id);
-        
             setMembersIds(membersIds => [...membersIds, getProfile._id])
-    
             setMembers(members => [...members, getProfile])
-    
-    
+
             const newList = allfriends.filter(friendId => {
                 return friendId._id !== id;
             })
-            
             setAllfriends(newList) 
             }
-           
-           
+
         }
         else{
             let getProfile = allfriends.find(element => element._id === id);
-        
             setMembersIds(membersIds => [...membersIds, getProfile._id])
-    
+
             setMembers(members => [...members, getProfile])
-    
-    
+
             const newList = allfriends.filter(friendId => {
                 return friendId._id !== id;
             })
-            
-            setAllfriends(newList)  
+
+            setAllfriends(newList)
         }
 
-             
-        
     }
 
     const removeMember = (e) =>{
@@ -245,7 +227,6 @@ const Projects = ({props}) => {
             console.log("done")
             setAllfriends(allfriends => [...allfriends, getProfile])
         }
-        
 
         const newList = members.filter(friendId => {
             return friendId._id !== id;
@@ -284,10 +265,9 @@ const Projects = ({props}) => {
     const handlePhasesInput = (e) =>{
         const form = e.currentTarget;
         e.preventDefault();
-       
 
         console.log(phaseInput)
-        
+
         if(projectPhases.length <= 9 && phaseInput){
             let checkPhase = projectPhases.find(element1 => element1 === phaseInput);
             if(checkPhase){
@@ -301,7 +281,7 @@ const Projects = ({props}) => {
                 }
                 else{
                     return;
-                }  
+                }
             }
         }
         else{
@@ -309,8 +289,6 @@ const Projects = ({props}) => {
             setAlertMessage("Please add minimum 1 or maximum 10 phases per project.");
             setShowAlert(true);
         }
-        
-        
         setPhaseInput("")
         form.reset();
     }
@@ -345,9 +323,8 @@ const Projects = ({props}) => {
         <ListGroup.Item className='newProjectBtn' onClick={handleShow}>
             <i className='fa fa-plus'></i>
             {' '}
-            Create Project         
+            Create Project
         </ListGroup.Item>
-     
       <Modal show={show} fullscreen={fullscreen} onHide={handleHideModal}>
         <Modal.Header closeButton className='modalHeader'>
             <Modal.Title>Create New Project</Modal.Title>
@@ -358,27 +335,26 @@ const Projects = ({props}) => {
                 <Row>
                     <Col>
                     <Form.Group className="mb-3" >
-                        <Form.Label >Title</Form.Label>
-                        <Form.Control type="text" name='projectTitle' className='formInput' id='projectTitle' value={projectDetails.projectTitle} onChange={handleInputs} placeholder="Enter Project Title" />
+                        <Form.Label >Team No</Form.Label>
+                        <Form.Control type="text" name='teamNo' className='formInput' id='teamNo' value={projectDetails.teamNo} onChange={handleInputs} placeholder="Enter TeamNo" />
                     </Form.Group>
                     </Col>
                     <Col>
                     <Form.Group className="mb-3 inputGroup" >
                         <Form.Label >Type</Form.Label>
                         <Form.Select name='projectType' id='projectType' onChange={handleInputs} value={projectDetails.projectType} className='formInput'>                
-                            <option className='listOption' value='N/A'>N/A</option>               
-                            <option className='listOption' value='Personal'>Personal</option>               
-                            <option className='listOption' value='Team'>Team</option>              
+                            <option className='listOption' value='Personal'>Personal</option>
+                            <option className='listOption' value='Team'>Team</option>
                         </Form.Select>
                     </Form.Group>
-  
+
                 </Col>
                 </Row>
                 <Row>
                     <Col>
                     <Form.Group className="mb-3">
-                        <Form.Label>Discription</Form.Label>
-                        <Form.Control as="textarea" rows={3} name='projectDiscription' className='formInput'id='projectDiscription' value={projectDetails.projectDiscription} onChange={handleInputs}/>
+                        <Form.Label>Project Title</Form.Label>
+                        <Form.Control as="textarea" rows={3} name='projectTitle' className='formInput'id='projectTitle' value={projectDetails.projectTitle} onChange={handleInputs}/>
                     </Form.Group>
                     </Col>
                 </Row>
@@ -395,7 +371,6 @@ const Projects = ({props}) => {
                     <Form.Control type="date" name='dueDate' id='dueDate' className='formInput' value={projectDetails.dueDate} onChange={handleInputs} placeholder="date" min={new Date().toISOString().split('T')[0]}  />
                 </Form.Group>
                 </Col>
-                
                 </Row>
                 <Row>
                     <Col>
@@ -422,7 +397,7 @@ const Projects = ({props}) => {
                             </ListGroup.Item>
                         )}
 
-                        </ListGroup>                
+                        </ListGroup>
                     </Col>
                 </Row>
                 <br></br>
@@ -435,7 +410,7 @@ const Projects = ({props}) => {
                                 <Container>
                                 <Row className="justify-content-md-center">
                                     <Col lg="3">
-                                        <img 
+                                        <img
                                             src={members.image}
                                             onError={(e)=>{e.target.onError = null; e.target.src = image_S1}}
                                             className="profileImages imageFloat"
@@ -460,7 +435,6 @@ const Projects = ({props}) => {
                                     <Col lg="2">
                                         <i className="fa fa-trash phaseTrashBtn" id={members._id} onClick={removeMember}></i>
                                     </Col>
-                                    
                                 </Row>
                                 </Container>
                             </ListGroup.Item>
@@ -469,7 +443,7 @@ const Projects = ({props}) => {
                         </Col>
                     </Row>
                     <br></br>
-                    <Row className="justify-content-md-center">            
+                    <Row className="justify-content-md-center">
                         <Col sm lg={5}>
                             <Button className='projectSubmitBtn' variant="primary" type="submit">
                                 Create Project
@@ -594,7 +568,7 @@ const Projects = ({props}) => {
                                 required
                                 type="text"
                                 placeholder="Phase Title"
-                                onChange={(e)=>setPhaseInput(e.target.value)} 
+                                onChange={(e)=>setPhaseInput(e.target.value)}
                                 isValid={phaseInput}
                                 isInvalid={!phaseInput}
                                 className='formInput'
@@ -648,11 +622,6 @@ const Projects = ({props}) => {
                 </Container>
                 </Modal.Body>
             </Modal>
-            
-
-
-
-
 
             {/* Alert Modal */}
 
@@ -668,9 +637,6 @@ const Projects = ({props}) => {
             </Modal.Footer>
             </Modal>
 
-
-            
-                
     </>
   )
 }

@@ -61,8 +61,8 @@ const DeleteProject = ({projectData}) => {
                 <>
                 <p className='warningTxt'>Selected project will be permanently deleted when click on <b>Delete Project</b> button.</p>
                 <ListGroup>
-                    <ListGroup.Item className='memberLists'><b>Title: </b> {projectData.currentProject.projectTitle} </ListGroup.Item>
-                    <ListGroup.Item className='memberLists'><b>Discription: </b> {projectData.currentProject.projectDiscription}</ListGroup.Item>
+                    <ListGroup.Item className='memberLists'><b>Title: </b> {projectData.currentProject.teamNo} </ListGroup.Item>
+                    <ListGroup.Item className='memberLists'><b>Discription: </b> {projectData.currentProject.projectTitle}</ListGroup.Item>
                     <ListGroup.Item className='memberLists'><b>Type: </b> {projectData.currentProject.projectType}</ListGroup.Item>
                 </ListGroup>
                 </>

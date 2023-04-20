@@ -5,17 +5,16 @@ const multer = require("multer");
 
 const upload = multer({ dest: 'uploads/' });
 
-
-const User = require('../models/userSchema'); 
-const Chat = require('../models/chatSchema'); 
+const User = require('../models/userSchema');
+const Chat = require('../models/chatSchema');
 const Project = require('../models/project');
 const Phases = require('../models/phases');
 const ProjectNotification = require('../models/projectNotification');
 
 
 
-module.exports = router.post('/createNewProject', userAuth, upload.array("projectFiles"), async(req, res)=>{
-    const {projectTitle, projectDiscription, startDate, dueDate, projectType} = req.body;
+module.exports = router.post('/createNewProject', userAuth, upload.array("projectFiles"), async(req, res) => {
+    const { teamNo, projectTitle, startDate, dueDate, projectType } = req.body;
     const projectMembers = JSON.parse(req.body.projectMembers);
     const projectDesig = JSON.parse(req.body.projectDesig);
     const projectPhases = JSON.parse(req.body.projectPhases);
@@ -24,39 +23,45 @@ module.exports = router.post('/createNewProject', userAuth, upload.array("projec
     let allMembers = [];
     let allPhases = [];
     let singlePhasePercentage = Math.round(100 / projectPhases.length);
-    
-    projectFiles.map((element)=>{
+
+    projectFiles.map((element) => {
         let fileObj = {
             fileName: element.originalname,
             filePath: element.path,
             fileType: element.mimetype,
             fileSize: element.size,
+            fileUrl: element.url,
         }
         allfiles.push(fileObj);
     });
 
-    projectDesig.map((element)=>{
-        let memberObj = {
+
+    projectDesig.map(async(element) => {
+        const user = await User.findById(element.id, { name: 1, registrationNo: 1, userType: 1 });
+        const memberObj = {
             memberRef: element.id,
             designation: element.desg,
-           
-        }
+            name: user.name,
+            registrationNo: user.registrationNo,
+            userType: user.userType
+        };
         allMembers.push(memberObj);
     });
-   
-    projectPhases.map((element, index)=>{
+
+
+    projectPhases.map((element, index) => {
         let phaseObj = {
             PhaseTitle: element,
-            PhaseNum: index + 1,           
+            PhaseNum: index + 1,
         }
         allPhases.push(phaseObj);
     });
 
     try {
-        const data = new Project({  
+        const data = new Project({
             projectCreator: req.userID,
+            teamNo: teamNo,
             projectTitle: projectTitle,
-            projectDiscription: projectDiscription,
             startDate: new Date(startDate),
             dueDate: new Date(dueDate),
             projectType: projectType,
@@ -68,7 +73,7 @@ module.exports = router.post('/createNewProject', userAuth, upload.array("projec
 
         await data.save();
 
-        res.status(201).send({message: "Project created successfully"});
+        res.status(201).send({ message: "Project created successfully" });
     } catch (error) {
         res.status(500).send(error.message);
         console.log(error)
@@ -77,32 +82,31 @@ module.exports = router.post('/createNewProject', userAuth, upload.array("projec
 
 
 
-module.exports = router.post('/createProjectChat', userAuth, async(req, res)=>{
+module.exports = router.post('/createProjectChat', userAuth, async(req, res) => {
     const selectedProjectId = req.body.selectedProjectId;
     const findProject = await Project.findOne({ _id: selectedProjectId });
     const findChat = await Chat.findOne({ projectRef: selectedProjectId });
     let allMembers = [findProject.projectCreator];
-    
-    findProject.members.map((element)=>{ 
+
+    findProject.members.map((element) => {
         allMembers.push(element.memberRef);
     });
 
     try {
-        if(findChat){
-            res.status(201).send({message: "Chat already exist, Please go to Chat Box."});
-        }
-        else{
-            const projectChat = new Chat({  
+        if (findChat) {
+            res.status(201).send({ message: "Chat already exist, Please go to Chat Box." });
+        } else {
+            const projectChat = new Chat({
                 users: allMembers,
                 isGroupChat: true,
-                groupName: findProject.projectTitle,
+                groupName: findProject.teamNo,
                 projectRef: findProject._id,
                 groupAdmin: findProject.projectCreator,
             });
 
             await projectChat.save();
 
-            res.status(201).send({message: "Chat Created. Please got to Chat Box."});
+            res.status(201).send({ message: "Chat Created. Please got to Chat Box." });
         }
     } catch (error) {
         res.status(500).send(error.message);
@@ -112,7 +116,7 @@ module.exports = router.post('/createProjectChat', userAuth, async(req, res)=>{
 
 
 
-module.exports = router.get('/getProjects', userAuth, async(req, res)=>{
+module.exports = router.get('/getProjects', userAuth, async(req, res) => {
     const findProjects = await Project.find({ projectCreator: req.userID });
 
     try {
@@ -126,8 +130,8 @@ module.exports = router.get('/getProjects', userAuth, async(req, res)=>{
 
 
 
-module.exports = router.post('/updatingProject', userAuth, upload.array("projectFiles"), async(req, res)=>{
-    const {projectTitle, projectDiscription, startDate, dueDate, projectType} = req.body;
+module.exports = router.post('/updatingProject', userAuth, upload.array("projectFiles"), async(req, res) => {
+    const { projectTitle, projectDiscription, startDate, dueDate, projectType } = req.body;
     const projectId = JSON.parse(req.body.projectId)
     const projectMembers = JSON.parse(req.body.projectMembers)
     const projectDesig = JSON.parse(req.body.projectDesig)
@@ -141,19 +145,19 @@ module.exports = router.post('/updatingProject', userAuth, upload.array("project
     let allPhases = [];
     let singlePhasePercentage = Math.round(100 / projectPhases.length);
 
-    if(existingFiles){
-        existingFiles.map((element)=>{
+    if (existingFiles) {
+        existingFiles.map((element) => {
             let fileObj = {
-            fileName: element.fileName,
-            filePath: element.filePath,
-            fileType: element.fileType,
-            fileSize: element.fileSize,
-        }
+                fileName: element.fileName,
+                filePath: element.filePath,
+                fileType: element.fileType,
+                fileSize: element.fileSize,
+            }
             allfiles.push(fileObj)
         })
     }
 
-    projectFiles.map((element)=>{
+    projectFiles.map((element) => {
         let fileObj = {
             fileName: element.originalname,
             filePath: element.path,
@@ -163,26 +167,26 @@ module.exports = router.post('/updatingProject', userAuth, upload.array("project
         allfiles.push(fileObj)
     })
 
-    projectDesig.map((element)=>{
+    projectDesig.map((element) => {
         let memberObj = {
             memberRef: element.memberRef,
             designation: element.designation,
-           
+
         }
         allMembers.push(memberObj);
         chatMembers.push(element.memberRef);
     })
 
-    projectPhases.map((element, index)=>{
+    projectPhases.map((element, index) => {
         let phaseObj = {
             PhaseTitle: element.PhaseTitle,
-            PhaseNum: index + 1,           
+            PhaseNum: index + 1,
         }
         allPhases.push(phaseObj)
     })
 
     try {
-        const findProject = await Project.updateOne({ _id: projectId },{
+        const findProject = await Project.updateOne({ _id: projectId }, {
             $set: {
                 "projectTitle": projectTitle,
                 "projectDiscription": projectDiscription,
@@ -196,14 +200,14 @@ module.exports = router.post('/updatingProject', userAuth, upload.array("project
             }
         });
 
-        const findChat = await Chat.updateOne({ projectRef: projectId },{ 
+        const findChat = await Chat.updateOne({ projectRef: projectId }, {
             users: chatMembers,
             groupName: projectTitle,
         });
 
 
-        
-        res.status(201).send({message: "Project updated successfully"});
+
+        res.status(201).send({ message: "Project updated successfully" });
     } catch (error) {
         res.status(500).send(error.message);
         console.log(error)
@@ -211,13 +215,12 @@ module.exports = router.post('/updatingProject', userAuth, upload.array("project
 });
 
 
-
-module.exports = router.post('/deleteProject', userAuth, async(req, res)=>{
+module.exports = router.post('/deleteProject', userAuth, async(req, res) => {
     const selectedId = req.body.selectedId;
 
     const deleteSelectedProject = await Project.deleteOne({ _id: selectedId });
     try {
-        res.status(201).send({message: "Project deleted"});
+        res.status(201).send({ message: "Project deleted" });
     } catch (error) {
         res.status(500).send(error.message);
         console.log(error)
@@ -226,36 +229,35 @@ module.exports = router.post('/deleteProject', userAuth, async(req, res)=>{
 
 
 
-module.exports = router.post('/assignProjectPhases', userAuth, async(req, res)=>{
+module.exports = router.post('/assignProjectPhases', userAuth, async(req, res) => {
     const assignedPhases = req.body.assignEachPhase;
     const selectedProjectId = req.body.projectId;
     const findProjectPhases = await Phases.findOne({ projectRef: selectedProjectId });
 
     try {
-        if(findProjectPhases){
+        if (findProjectPhases) {
 
-            const findProject = await Phases.updateOne({ projectRef: selectedProjectId },{
+            const findProject = await Phases.updateOne({ projectRef: selectedProjectId }, {
                 $set: {
                     "projectRef": selectedProjectId,
                     "allPhases": assignedPhases,
                 }
             });
 
-            res.status(201).send({message: "Phases updated"});
-        }
-        else{
+            res.status(201).send({ message: "Phases updated" });
+        } else {
 
-            const data = new Phases({  
+            const data = new Phases({
                 projectRef: selectedProjectId,
                 allPhases: assignedPhases,
             });
-    
+
             await data.save();
-    
-            res.status(201).send({message: "Phases assigned"});
+
+            res.status(201).send({ message: "Phases assigned" });
 
         }
-        
+
     } catch (error) {
         res.status(500).send(error.message);
         console.log(error)
@@ -263,24 +265,24 @@ module.exports = router.post('/assignProjectPhases', userAuth, async(req, res)=>
 });
 
 
-module.exports = router.post('/showProjectPhases', userAuth, async(req, res)=>{
+module.exports = router.post('/showProjectPhases', userAuth, async(req, res) => {
     const selectedProjectId = req.body.selectedProjectId;
     const selectedProjectCreator = req.body.selectedProjectCreator;
 
     const findSelectedProject = await Project.findOne({ _id: selectedProjectId });
     const findProjectPhases = await Phases.findOne({ projectRef: selectedProjectId });
-    
+
     let selectedProjectMembers = [];
     let findProjectCreator;
-    
-    
+
+
 
     try {
-        if(findSelectedProject){
+        if (findSelectedProject) {
 
-            const currentProjectCreator = await User.findOne({ _id : selectedProjectCreator });
-            
-            if(currentProjectCreator){
+            const currentProjectCreator = await User.findOne({ _id: selectedProjectCreator });
+
+            if (currentProjectCreator) {
                 findProjectCreator = {
                     projectCreatorId: currentProjectCreator._id,
                     projectCreatorName: currentProjectCreator.name,
@@ -289,9 +291,9 @@ module.exports = router.post('/showProjectPhases', userAuth, async(req, res)=>{
                 }
             }
 
-            
-            let runMap = findSelectedProject.members.map( async (element)=>{
-                let findProjectMember = await User.findOne({ _id : element.memberRef });
+
+            let runMap = findSelectedProject.members.map(async(element) => {
+                let findProjectMember = await User.findOne({ _id: element.memberRef });
                 let memberObj = {
                     memberId: findProjectMember._id,
                     memberName: findProjectMember.name,
@@ -302,10 +304,10 @@ module.exports = router.post('/showProjectPhases', userAuth, async(req, res)=>{
             })
 
             await Promise.all(runMap);
-            
-            res.status(201).send({findProjectPhases, findProjectCreator, selectedProjectMembers});
-        }        
-        
+
+            res.status(201).send({ findProjectPhases, findProjectCreator, selectedProjectMembers });
+        }
+
     } catch (error) {
         res.status(500).send(error.message);
         console.log(error)
@@ -315,8 +317,8 @@ module.exports = router.post('/showProjectPhases', userAuth, async(req, res)=>{
 
 
 
-module.exports = router.get('/getAssignedProjects', userAuth, async(req, res)=>{
-    const findProjects = await Project.find({ "members.memberRef" : req.userID });
+module.exports = router.get('/getAssignedProjects', userAuth, async(req, res) => {
+    const findProjects = await Project.find({ "members.memberRef": req.userID });
     try {
 
         res.status(201).send(findProjects);
@@ -329,24 +331,23 @@ module.exports = router.get('/getAssignedProjects', userAuth, async(req, res)=>{
 
 
 
-module.exports = router.post('/phaseCompletedNotification', userAuth, async(req, res)=>{
+module.exports = router.post('/phaseCompletedNotification', userAuth, async(req, res) => {
     const selectedProjectId = req.body.selectedProjectId;
     const selectedPhaseId = req.body.selectedPhase.phaseId;
     const selectedPhaseMember = req.body.selectedPhase.memberRef;
     const selectedPhase = req.body.selectedPhase;
 
-    const findNotification = await ProjectNotification.findOne({ phaseId: selectedPhaseId, memberRef: selectedPhaseMember})
+    const findNotification = await ProjectNotification.findOne({ phaseId: selectedPhaseId, memberRef: selectedPhaseMember })
     const findUser = await User.findOne({ _id: selectedPhaseMember })
 
     try {
 
-        if(findNotification){
-            
-            res.status(201).send({message: "Notification already sent"});
-        }
-        else{
+        if (findNotification) {
 
-            const data = new ProjectNotification({  
+            res.status(201).send({ message: "Notification already sent" });
+        } else {
+
+            const data = new ProjectNotification({
                 projectRef: selectedProjectId,
                 phaseId: selectedPhase.phaseId,
                 phaseNum: selectedPhase.phaseNum,
@@ -357,12 +358,12 @@ module.exports = router.post('/phaseCompletedNotification', userAuth, async(req,
                 uniqueId: selectedPhase.uniqueId,
                 notificationDate: Date.now(),
             });
-    
+
             await data.save();
 
-            res.status(201).send({message: "Notification sent"});
+            res.status(201).send({ message: "Notification sent" });
         }
- 
+
     } catch (error) {
         res.status(500).send(error.message);
         console.log(error)
@@ -372,13 +373,13 @@ module.exports = router.post('/phaseCompletedNotification', userAuth, async(req,
 
 
 
-module.exports = router.post('/getProjectNotifications', userAuth, async(req, res)=>{
+module.exports = router.post('/getProjectNotifications', userAuth, async(req, res) => {
     const selectedProjectId = req.body.selectedProjectId;
 
     const findNotification = await ProjectNotification.find({ projectRef: selectedProjectId })
 
     try {
-        if(findNotification){
+        if (findNotification) {
             res.status(201).send(findNotification);
         }
     } catch (error) {
@@ -389,14 +390,14 @@ module.exports = router.post('/getProjectNotifications', userAuth, async(req, re
 
 
 
-module.exports = router.post('/deleteProjectNotifications', userAuth, async(req, res)=>{
+module.exports = router.post('/deleteProjectNotifications', userAuth, async(req, res) => {
     const selectedProjectId = req.body.selectedProjectId;
 
     const findNotification = await ProjectNotification.deleteMany({ projectRef: selectedProjectId })
 
     try {
-        if(findNotification){
-            res.status(201).send({message: "Notifications Deleted"});
+        if (findNotification) {
+            res.status(201).send({ message: "Notifications Deleted" });
         }
     } catch (error) {
         res.status(500).send(error.message);
@@ -407,23 +408,23 @@ module.exports = router.post('/deleteProjectNotifications', userAuth, async(req,
 
 
 
-module.exports = router.post('/updatePhaseToCompleted', userAuth, async(req, res)=>{
+module.exports = router.post('/updatePhaseToCompleted', userAuth, async(req, res) => {
     const selectedphaseForUpdate = req.body.selectedphaseForUpdate;
     const selectedphaseId = selectedphaseForUpdate._id;
 
-    const findPhase = await Project.findOne({ "projectPhases._id" : selectedphaseId })
-   
+    const findPhase = await Project.findOne({ "projectPhases._id": selectedphaseId })
+
     try {
-        if(findPhase){
-            findPhase.projectPhases.map((element)=>{
-                if(element._id.toString() === selectedphaseId){ 
+        if (findPhase) {
+            findPhase.projectPhases.map((element) => {
+                if (element._id.toString() === selectedphaseId) {
                     element.PhaseStatus = "Completed";
                 }
             })
             findPhase.progressBar = Number(findPhase.progressBar) + Number(findPhase.phasePercentage);
 
             await findPhase.save();
-            res.status(201).send({message: "Phase Updated"});
+            res.status(201).send({ message: "Phase Updated" });
         }
     } catch (error) {
         res.status(500).send(error.message);
@@ -434,23 +435,23 @@ module.exports = router.post('/updatePhaseToCompleted', userAuth, async(req, res
 
 
 
-module.exports = router.post('/updatePhaseToPending', userAuth, async(req, res)=>{
+module.exports = router.post('/updatePhaseToPending', userAuth, async(req, res) => {
     const selectedphaseForUpdate = req.body.selectedphaseForUpdate;
     const selectedphaseId = selectedphaseForUpdate._id;
 
-    const findPhase = await Project.findOne({ "projectPhases._id" : selectedphaseId })
-    // console.log(findPhase)
+    const findPhase = await Project.findOne({ "projectPhases._id": selectedphaseId })
+        // console.log(findPhase)
     try {
-        if(findPhase){
-            findPhase.projectPhases.map((element)=>{
-                if(element._id.toString() === selectedphaseId){
+        if (findPhase) {
+            findPhase.projectPhases.map((element) => {
+                if (element._id.toString() === selectedphaseId) {
                     element.PhaseStatus = "Pending";
                 }
             });
             findPhase.progressBar = Number(findPhase.progressBar) - Number(findPhase.phasePercentage);
 
             await findPhase.save();
-            res.status(201).send({message: "Phase Updated"});
+            res.status(201).send({ message: "Phase Updated" });
         }
     } catch (error) {
         res.status(500).send(error.message);
@@ -462,14 +463,14 @@ module.exports = router.post('/updatePhaseToPending', userAuth, async(req, res)=
 
 
 
-module.exports = router.get('/downloadFile/:id', userAuth, async(req, res)=>{
+module.exports = router.get('/downloadFile/:id', userAuth, async(req, res) => {
     const fileId = req.params.id;
-    const findProject = await Project.findOne({ "projectFiles._id" : fileId });
+    const findProject = await Project.findOne({ "projectFiles._id": fileId });
     let selectedfile = null;
     try {
-        if(findProject){
-            let runMap = findProject.projectFiles.map((element)=>{
-                if(element._id.toString() === fileId){
+        if (findProject) {
+            let runMap = findProject.projectFiles.map((element) => {
+                if (element._id.toString() === fileId) {
                     selectedfile = element;
                 }
             })
@@ -483,7 +484,7 @@ module.exports = router.get('/downloadFile/:id', userAuth, async(req, res)=>{
             res.set("Content-Disposition", `attachment; filename=${fileName}`);
             res.download(filePath, fileName);
         }
-        
+
     } catch (error) {
         res.status(500).send(error.message);
         console.log(error)

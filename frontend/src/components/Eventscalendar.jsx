@@ -68,7 +68,7 @@ const Eventscalendar = () => {
 
     for(let items of projects){
         events.push({
-            title: items.projectTitle,
+            title: items.teamNo,
             date: items.dueDate.substring(0,10)
         })
     }

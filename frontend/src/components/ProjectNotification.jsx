@@ -78,7 +78,7 @@ const ProjectNotification = ({projectData}) => {
             <Modal show={show} fullscreen={fullscreen} onHide={handleHideModal} backdrop="static" keyboard={false} >
                 <Modal.Header closeButton className='modalHeader'>
                     {projectData ?
-                        <Modal.Title>{projectData.projectTitle}</Modal.Title>
+                        <Modal.Title>{projectData.teamNo}</Modal.Title>
                     :
                         <Modal.Title>Selected Project</Modal.Title>
                     } 
@@ -121,7 +121,7 @@ const ProjectNotification = ({projectData}) => {
         <Modal size="sm" show={smShow} onHide={() => setSmShow(false)} aria-labelledby="example-modal-sizes-title-sm">
             <Modal.Header closeButton className='modalHeader'>
                 {projectData ?
-                    <Modal.Title id="example-modal-sizes-title-sm">{projectData.projectTitle}</Modal.Title>
+                    <Modal.Title id="example-modal-sizes-title-sm">{projectData.teamNo}</Modal.Title>
                   :
                     <Modal.Title id="example-modal-sizes-title-sm">Selected Project</Modal.Title>
                 }  

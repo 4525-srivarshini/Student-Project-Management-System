@@ -20,5 +20,9 @@ router.use(require('../controllers/searchBar'))
 router.use(require('../controllers/taskCategories'))
 router.use(require('../controllers/notes'))
 router.use(require('../controllers/UploadFiles'))
+router.use(require('../controllers/StudentDetails'))
+router.use(require('../controllers/SupervisorDetails'))
+router.use(require('../controllers/ProjectDetails'))
+router.use(require('../controllers/ProjectFiles'))
 
 module.exports = router;

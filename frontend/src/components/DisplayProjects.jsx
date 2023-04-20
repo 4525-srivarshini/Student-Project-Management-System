@@ -166,7 +166,7 @@ const DisplayProjects = (props) => {
                         {projects.map((project, index)=>
                             <Col xs lg="5" key={index}>
                                 <ListGroup.Item className='projectListItem' id={project._id} onClick={clickedProject}>
-                                    <b>{project.projectTitle}</b><b className='projectOwner'>My Project</b>
+                                    <b>{project.teamNo}</b><b className='projectOwner'>My Project</b>
                                     <br></br>
                                     <br></br>
                                     <ProgressBar animated variant="info" now={project.progressBar} label={`${project.progressBar}%`} />
@@ -179,7 +179,7 @@ const DisplayProjects = (props) => {
                         {assignedProjects.map((project, index)=>
                             <Col xs lg="5" key={index}>
                                 <ListGroup.Item className='projectListItem' id={project._id} onClick={clickedAssignedProject}>
-                                    <b>{project.projectTitle}</b><b className='projectOwner'>Assigned Project</b>
+                                    <b>{project.teamNo}</b><b className='projectOwner'>Assigned Project</b>
                                     <br></br>
                                     <br></br>
                                     <ProgressBar animated variant="info" now={project.progressBar} label={`${project.progressBar}%`}/>

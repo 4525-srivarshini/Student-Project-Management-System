@@ -249,7 +249,7 @@ const AssignPhases = ({projectData}) => {
                 <>
                 <p>You can assign & update a phase of selected project to your team members or yourself.</p> 
                 <p>Click on mentioned project phases to assign a phase to a member.</p>
-                <p><b>Project Title:  {projectData.currentProject.projectTitle} </b></p>
+                <p><b>Project Title:  {projectData.currentProject.teamNo} </b></p>
                 <br></br>
                 <Container>
                     <p><b>Project Phases :-</b></p>

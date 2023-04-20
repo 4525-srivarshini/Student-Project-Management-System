@@ -1,9 +1,9 @@
 const express = require('express');
-const router = express.Router();
 const csv = require('csv-parser');
 const fs = require('fs');
 const mongoose = require('mongoose');
-const User = require('../models/students');
+const Users = require('../models/students');
+const router = express.Router();
 
 const app = express();
 app.use(express.json());
