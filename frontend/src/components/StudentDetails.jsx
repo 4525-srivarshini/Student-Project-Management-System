@@ -1,5 +1,6 @@
-import React, { useState,useEffect } from 'react'
-import { ListGroup, Modal, Table,Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { ListGroup, Modal, Table, Button } from 'react-bootstrap';
+import { CSVLink } from 'react-csv';
 
 const StudentDetails = () => {
   const [show, setShow] = useState(false);
@@ -14,11 +15,10 @@ const StudentDetails = () => {
 
   useEffect(() => {
     fetch('/students')
-      .then(response => response.json())
-      .then(data => setStudents(data))
-      .catch(error => console.error(error));
+      .then((response) => response.json())
+      .then((data) => setStudents(data))
+      .catch((error) => console.error(error));
   }, []);
-
 
   const handleEdit = (id) => {
     // add logic to edit the student with the specified id
@@ -27,11 +27,20 @@ const StudentDetails = () => {
   const handleDelete = (id) => {
     // add logic to delete the student with the specified id
   };
-  const handleDownload = (id) => {
-    // add logic to delete the student with the specified id
-  };
 
+  const headers = [
+    { label: 'Name', key: 'name' },
+    { label: 'Email', key: 'email' },
+    { label: 'CGPA', key: 'cgpa' },
+    { label: 'Registration No', key: 'registrationNo' },
+  ];
 
+  const csvData = students.map((student) => ({
+    name: student.name,
+    email: student.email,
+    cgpa: student.cgpa,
+    registrationNo: student.registrationNo,
+  }));
 
   return (
     <>
@@ -45,9 +54,13 @@ const StudentDetails = () => {
           <Modal.Title>Student Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Button variant="primary" onClick={handleDownload}>Download</Button>
-          <br/><br/>
-        <Table striped bordered>
+          <Button variant='primary' className='mb-3'>
+            <CSVLink data={csvData} headers={headers}>
+              Download
+            </CSVLink>
+          </Button>
+
+          <Table striped bordered>
             <thead>
               <tr>
                 <th>Name</th>
@@ -65,8 +78,12 @@ const StudentDetails = () => {
                   <td>{student.cgpa}</td>
                   <td>{student.registrationNo}</td>
                   <td>
-                    <Button variant="success" onClick={() => handleEdit(student._id)}>Edit</Button>{' '}
-                    <Button variant="danger" onClick={() => handleDelete(student._id)}>Delete</Button>
+                    <Button variant='success' onClick={() => handleEdit(student._id)}>
+                      Edit
+                    </Button>{' '}
+                    <Button variant='danger' onClick={() => handleDelete(student._id)}>
+                      Delete
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -75,7 +92,7 @@ const StudentDetails = () => {
         </Modal.Body>
       </Modal>
     </>
-  );    
+  );
 };
 
 export default StudentDetails;

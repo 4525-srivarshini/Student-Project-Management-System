@@ -7,8 +7,14 @@ const User = require('../models/userSchema');
 module.exports = router.post('/searchBar', userAuth, async(req, res) => {
     const searchInput = req.body.searchInput;
 
-    const findUsers = await User.find({ $text: { $search: searchInput } });
-
+    const findUsers = await User.find({
+        $or: [
+            { registrationNo: { $regex: searchInput, $options: 'i' } },
+            { email: { $regex: searchInput, $options: 'i' } },
+            { name: { $regex: searchInput, $options: 'i' } },
+            { specialization: { $regex: searchInput, $options: 'i' } }
+        ]
+    });
     try {
         if (findUsers) {
             res.status(201).send(findUsers);

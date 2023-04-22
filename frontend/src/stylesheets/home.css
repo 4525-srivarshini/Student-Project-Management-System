@@ -1,8 +1,18 @@
+.background {
+    background: url('../images/WhatsApp Image 2023-04-09 at 12.46.28 PM.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0%;
+}
 
-.background{
+.background2 {
     /* background-color: #282c34; */
-    background: white !important;
-   
+    background: rgba(247, 247, 247, 255) !important;
+    background-image: url('../images/WhatsApp\ Image\ 2023-04-09\ at\ 12.46.28\ PM.jpeg');
     background-size: 100% 100%;
     width: 100vw;
     height: 100vh;
@@ -11,45 +21,31 @@
     padding: 0%;
 }
 
-
-.background2{
-    /* background-color: #282c34; */
-    background: whitesmoke !important;
-    background-size: 100% 100%;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    /* overflow: hidden; */
-    padding: 0%;
-}
-
-
-.toggleBtn{
+.toggleBtn {
     height: 10vh;
-    align-self:flex-end;
+    align-self: flex-end;
     margin-left: 20%;
 }
 
-.tasksContainer{
+.tasksContainer {
     margin-left: 20% !important;
 }
 
-
-.modalHeader{
-    background:orange;
+.modalHeader {
+    background: dodgerblue;
     color: black;
     border: 1px solid white;
     border-bottom: none;
 }
 
-.modalBody{
-    background:dodgerblue;
-    color:black;
+.modalBody {
+    background-color: white;
+    color: black;
     border: 1px solid white;
     border-top: none;
 }
 
-.modalBodyStatic{
+.modalBodyStatic {
     background: rgb(173, 218, 230);
     color: black;
     border: 1px solid white;
@@ -57,48 +53,51 @@
     border-bottom: none;
 }
 
-
-.modalFooter{
+.modalFooter {
     background: dodgerblue;
     color: #dad9d7;
     border: 1px solid #dad9d7;
     border-top: none;
 }
 
-
-
-
 .modalBody::-webkit-scrollbar {
-    width: 8px;               /* width of the entire scrollbar */
+    width: 8px;
+    /* width of the entire scrollbar */
 }
-  
+
 .modalBody::-webkit-scrollbar-track {
-    background: transparent;        /* color of the tracking area */
+    background: transparent;
+    /* color of the tracking area */
 }
-  
+
 .modalBody::-webkit-scrollbar-thumb {
-    background-color: #f09204;    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    border: 3px solid #dad9d7;  /* creates padding around scroll thumb */
+    background-color: #f09204;
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    border: 3px solid #dad9d7;
+    /* creates padding around scroll thumb */
 }
-
-
-
 
 .modalBodyStatic::-webkit-scrollbar {
-    width: 8px;               /* width of the entire scrollbar */
-}
-  
-.modalBodyStatic::-webkit-scrollbar-track {
-    background: transparent;        /* color of the tracking area */
-}
-  
-.modalBodyStatic::-webkit-scrollbar-thumb {
-    background-color: #f09204;    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    border: 3px solid #0c0c0c;  /* creates padding around scroll thumb */
+    width: 8px;
+    /* width of the entire scrollbar */
 }
 
-.img{
+.modalBodyStatic::-webkit-scrollbar-track {
+    background: transparent;
+    /* color of the tracking area */
+}
+
+.modalBodyStatic::-webkit-scrollbar-thumb {
+    background-color: #f09204;
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    border: 3px solid #0c0c0c;
+    /* creates padding around scroll thumb */
+}
+
+.img {
     padding: 100px
 }

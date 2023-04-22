@@ -1,37 +1,43 @@
+const multer = require('multer');
+const xlsx = require('xlsx');
+const User = require('../models/userSchema');
 const express = require('express');
-const csv = require('csv-parser');
-const fs = require('fs');
-const mongoose = require('mongoose');
-const Users = require('../models/students');
 const router = express.Router();
 
-const app = express();
-app.use(express.json());
+const upload = multer({ dest: 'uploads/' });
 
+router.post('/upload', upload.single('file'), async(req, res) => {
+    const workbook = xlsx.readFile(req.file.path);
+    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    const data = xlsx.utils.sheet_to_json(worksheet);
 
-// Endpoint for uploading CSV file
-module.exports = router.post('/upload', (req, res) => {
-    if (!req.files || Object.keys(req.files).length === 0) {
-        return res.status(400).send('No files were uploaded.');
+    const uniqueData = data.filter((value, index, self) =>
+        index === self.findIndex((v) => (
+            v.registrationNo === value.registrationNo &&
+            v.name === value.name &&
+            v.email === value.email
+        ))
+    );
+
+    const users = uniqueData.map(row => ({
+        name: row.name,
+        email: row.email,
+        registrationNo: row.registrationNo,
+        userType: row.userType,
+        cgpa: row.cgpa,
+        specialization: row.specialization,
+        userPassword: row.userPassword,
+        userCnfrmPass: row.userCnfrmPass
+    }));
+
+    try {
+        await User.insertMany(users);
+        res.send('File uploaded successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error uploading file');
     }
-
-    // Read the uploaded CSV file
-    const file = req.files.file;
-    const data = [];
-    fs.createReadStream(file.tempFilePath)
-        .pipe(csv())
-        .on('data', (row) => {
-            data.push(row);
-        })
-        .on('end', () => {
-            // Save the data to MongoDB
-            Users.create(data)
-                .then(() => {
-                    res.send('Data uploaded successfully.');
-                })
-                .catch((err) => {
-                    console.error(err);
-                    res.status(500).send('Error uploading data.');
-                });
-        });
 });
+
+
+module.exports = router;

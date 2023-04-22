@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom'
-import { Row, Col,Container, Fade, Button, ListGroup, Badge } from 'react-bootstrap';
+import { Row, Col,Container, Fade, Button, ListGroup, Badge,Modal } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import '../stylesheets/todos.css'
 import TodoForm from './TodoForm';
@@ -9,6 +9,7 @@ import { UserContext } from '../App'
 const SideNavbar = () => {
 
     const {state, dispatch} = useContext(UserContext);  
+    const [fullscreen, setFullscreen] = useState(true);
     const [fecthTasks, setFecthTasks] = useState();
     const [tasks, setTasks] = useState([]);
     const [taskUpdate, setTaskUpdate] = useState();
@@ -19,7 +20,9 @@ const SideNavbar = () => {
     }
     const handleShow = () => setShow(true);
     
-
+    const handleHideModal = () =>{
+      setShow(false);
+  }
 
     
     const showTasks = async () =>{
@@ -74,12 +77,11 @@ const SideNavbar = () => {
           {' '}
           To-Do List
         </ListGroup.Item> 
-
-      <Offcanvas show={show} onHide={handleClose} >
-        <Offcanvas.Header closeButton className='todoOffCanvas'>
-          <Offcanvas.Title>To-Do-List</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body className='todoOffCanvas'>
+        <Modal show={show} fullscreen={fullscreen} onHide={handleHideModal}>
+        <Modal.Header closeButton className='modalHeader'>
+            <Modal.Title> To-Do-List </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className='todoOffCanvas'>
         <TodoForm clickedTask={{taskUpdate, setFecthTasks}}/>
           <Container className='todosContainer'>
               <Row>
@@ -103,8 +105,8 @@ const SideNavbar = () => {
             
             
             
-        </Offcanvas.Body>
-      </Offcanvas>
+        </Modal.Body>
+        </Modal>
 
     </>
   )

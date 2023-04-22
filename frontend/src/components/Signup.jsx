@@ -5,6 +5,8 @@ import '../stylesheets/login.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col, Container, Card, CardGroup, ProgressBar, Navbar, Nav, NavDropdown, Form, Image, Button, ListGroup, OverlayTrigger,Offcanvas, InputGroup,Tooltip, Modal } from 'react-bootstrap';
 import { UserContext } from '../App';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const Signup = () => {
 
@@ -28,7 +30,9 @@ const Signup = () => {
     const [userType, setUserType] = useState('student');
     const [cgpa, setCgpa] = useState('');
     const [specialization, setSpecialization] = useState('');
-    const [showPassword, setShowPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handlePasswordToggle = () => setShowPassword(!showPassword);
     const [showCnfrmPass, setShowCnfrmPass] = useState('');
 
     const handleUserTypeChange = e => {
@@ -243,12 +247,24 @@ const Signup = () => {
                             <Form method='POST' onSubmit={handleSinginSubmit}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Email address</Form.Label>
-                                    <Form.Control type="email" className='formInput' value={userEmail} onChange={(e)=>setUserEmail(e.target.value)} placeholder="Enter email" required />
+                                    <Form.Control type="text" className='formInput' value={userEmail} onChange={(e)=>setUserEmail(e.target.value)} placeholder="Enter email" required />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" className='formInput' value={userPassword} onChange={(e)=>setUserPassword(e.target.value)} placeholder="Password" required />
-                                </Form.Group>
+        <Form.Label>Password</Form.Label>
+        <InputGroup>
+          <Form.Control
+            type={showPassword ? 'text' : 'password'}
+            className='formInput'
+            value={userPassword}
+            onChange={(e)=>setUserPassword(e.target.value)}
+            placeholder="Password"
+            required
+          />
+          <InputGroup.Text onClick={handlePasswordToggle} style={{cursor: 'pointer'}}>
+            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+          </InputGroup.Text>
+        </InputGroup>
+      </Form.Group>
                                 <br></br>
                                 <Form.Group className="mb-3" >
                                     <Button className='formSignInBtn' variant="primary" type="submit" >
@@ -273,11 +289,11 @@ const Signup = () => {
                             </Row>
                         </Container>
                     </Row>*/}
-                    <Row>
+                    {/*<Row>
                         <Container className='headingCont'>
                             <p className='accountTxt'>Need an account? <i className='signUpTxt' onClick={()=>setShowModal(true)}>Sign Up</i></p>
                         </Container>
-                    </Row>
+                    </Row>*/}
                     <br></br>
                 </Container>
 

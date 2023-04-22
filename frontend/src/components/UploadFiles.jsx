@@ -1,55 +1,67 @@
-import React, { useState } from 'react'
-import { ListGroup, Modal } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { ListGroup, Modal, Alert } from 'react-bootstrap';
+import axios from 'axios';
 
-const UploadFiles = () => {
+const UploadXlsx = () => {
   const [show, setShow] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
+  const [file, setFile] = useState(null);
 
-  const handleShow = () => {
-    setShow(true);
-    setShowAlert(true);
-  };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-  const handleFileUpload = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const file = event.target[0].files[0];
     const formData = new FormData();
     formData.append('file', file);
+    axios.post('/upload', formData)
+      .then((response) => {
+        console.log('File uploaded successfully');
+        setShowAlert(true);
+      })
+      .catch((error) => {
+        console.error('Error uploading file', error);
+      });
+  };
 
-    fetch('/upload', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => {
-      console.log('File uploaded successfully');
-    })
-    .catch(error => {
-      console.error('Error uploading file', error);
-    });
-  }
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
 
   return (
     <>
       <ListGroup.Item className='navList' onClick={handleShow}>
-        <i className='fas fa-tasks'>&nbsp;</i>         
+        <i className='fas fa-tasks'>&nbsp;</i>
         {' '}
-        Upload Files
+        Upload XLSX
       </ListGroup.Item>
 
-      <Modal fullscreen={fullscreen} show={showAlert} onHide={() => setShowAlert(false)}>
+      <Modal  fullscreen={fullscreen} show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Upload Files</Modal.Title>
+          <Modal.Title>Upload XLSX</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <form onSubmit={handleFileUpload}>
-                <input type="file" name="file" multiple required/>
-                <button type="submit">Upload</button>
-            </form>
+          <form onSubmit={handleSubmit}>
+            <div className='form-group'>
+              <label htmlFor='file'>Choose a file:</label>
+              <input
+                type='file'
+                className='form-control-file'
+                id='file'
+                onChange={handleFileChange}
+              />
+            </div>
+            <button type='submit' className='btn btn-primary'>Upload</button>
+          </form>
         </Modal.Body>
+      </Modal>
+
+      <Modal variant='success' show={showAlert} onHide={() => setShowAlert(false)}>
+        File uploaded successfully!
       </Modal>
     </>
   );
 };
 
-export default UploadFiles;
+export default UploadXlsx;

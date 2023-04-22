@@ -6,6 +6,7 @@ import { Row, Col, Container, Navbar, Fade, Button, ListGroup, Badge } from 'rea
 import { UserContext } from '../App';
 import MainNavbar from './MainNavbar';
 import Signup from './Signup';
+import Project from './Projects';
 
 const Home = () => {
   const { state } = useContext(UserContext);

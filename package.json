@@ -13,5 +13,9 @@
     "license": "ISC",
     "devDependencies": {
         "concurrently": "^8.0.1"
+    },
+    "dependencies": {
+        "bcrypt": "^5.1.0",
+        "react-bootstrap": "^2.7.4"
     }
 }
