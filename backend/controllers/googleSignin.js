@@ -99,13 +99,11 @@ const User = require('../models/userSchema');
 }
 
 
-module.exports = router.post('/signInUser', async(req, res) => {
-    const { loginCredential, userPassword } = req.body;
 
-    // Check if the user exists in the database
-    const userExist = await User.findOne({
-        $or: [{ email: loginCredential }, { registrationNo: loginCredential }]
-    });
+module.exports = router.post('/signInUser', async(req, res) => {
+    const { userEmail, userPassword } = req.body;
+
+    const userExist = await User.findOne({ email: userEmail });
 
     if (!userExist) {
         return res.status(404).send({
@@ -113,30 +111,39 @@ module.exports = router.post('/signInUser', async(req, res) => {
         });
     }
 
-    // Check if the password is correct
-    if (userPassword === userExist.userPassword) {
-        const userProfile = {
-            id: userExist._id,
-            name: userExist.name,
-            email: userExist.email,
-            registrationNo: userExist.registrationNo,
-            userType: userExist.userType,
-            cgpa: userExist.cgpa,
-            specialization: userExist.specialization,
-        };
+    const matchPassword = userPassword === userExist.userPassword;
 
-        let token = await userExist.generateAuthToken();
+    try {
+        if (matchPassword) {
+            const userProfile = {
+                id: userExist._id,
+                name: userExist.name,
+                email: userExist.email,
+                image: userExist.image,
+                registrationNo: userExist.registrationNo,
+                userType: userExist.userType,
+                cgpa: userExist.cgpa,
+                specialization: userExist.specialization,
+                batchNo: userExist.batchNo,
+            };
 
-        res.cookie("jwtoken", token, {
-            expires: new Date(Date.now() + 25892000000),
-            httpOnly: true
-        })
+            let token = await userExist.generateAuthToken();
 
-        res.status(201).json(userProfile);
-    } else {
-        res.status(400).json({ message: "Invalid credentials" });
+            res.cookie("jwtoken", token, {
+                expires: new Date(Date.now() + 25892000000),
+                httpOnly: true
+            })
+
+            res.status(201).json(userProfile);
+        } else {
+            res.status(400).json({ message: "Invalid credentials" });
+        }
+    } catch (error) {
+        res.status(500).send(error.message);
+        console.log(error);
     }
 });
+
 
 
 

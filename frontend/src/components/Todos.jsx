@@ -73,14 +73,14 @@ const SideNavbar = () => {
     return ( 
         <>
         <ListGroup.Item className='navList' onClick={handleShow}>
-          <i className='fas fa-tasks'>&nbsp;</i>         
+          <i className='fas fa-tasks'>&nbsp;</i>        
           {' '}
           To-Do List
         </ListGroup.Item> 
         <Modal show={show} fullscreen={fullscreen} onHide={handleHideModal}>
-        <Modal.Header closeButton className='modalHeader'>
-            <Modal.Title> To-Do-List </Modal.Title>
-        </Modal.Header>
+          <Modal.Header closeButton className='modalHeader'>
+              <Modal.Title> To-Do-List </Modal.Title>
+          </Modal.Header>
         <Modal.Body className='todoOffCanvas'>
         <TodoForm clickedTask={{taskUpdate, setFecthTasks}}/>
           <Container className='todosContainer'>
@@ -102,9 +102,6 @@ const SideNavbar = () => {
                 </Col>
               </Row>
             </Container>
-            
-            
-            
         </Modal.Body>
         </Modal>
 

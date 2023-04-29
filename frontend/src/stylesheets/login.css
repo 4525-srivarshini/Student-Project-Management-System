@@ -1,82 +1,80 @@
-.signInCont{
+.signInCont {
     background-color: transparent;
-    color: dodgerblue;
+    color: #f15654;
     width: 30rem;
     margin-top: 3%;
 }
 
-
-.googleBtnCont{
+.googleBtnCont {
     background-color: transparent;
-    color: dodgerblue;
+    color: #f15654;
 }
 
-.signinFormCont{
+.signinFormCont {
     background-color: transparent;
-    color: dodgerblue;
+    color: #f15654;
 }
 
-.headingCont{
-    color: dodgerblue;
+.headingCont {
+    color: #f15654;
     text-align: center;
 }
 
-.orCont{
+.orCont {
     background-color: transparent;
-    color: dodgerblue;
+    color: #f15654;
 }
 
-.orTxt{
+.orTxt {
     display: flex;
     flex-direction: row;
 }
-.orTxt:before, .orTxt:after{
+
+.orTxt:before,
+.orTxt:after {
     content: "";
     flex: 1 1;
     border-bottom: 1px solid;
     margin: auto;
 }
+
 .orTxt:before {
     margin-right: 10px
 }
+
 .orTxt:after {
     margin-left: 10px
 }
 
-
-
-.formSignInBtn{
+.formSignInBtn {
     cursor: pointer;
-    background-color: #f0ae4e !important;
+    background-color: #f15654 !important;
     color: black;
-    border: 1px solid #f0ae4e;
-    border-radius: 25px 10px 25px 10px !important;
+    border: 1px solid#f15654;
+    border-radius: 10px 10px 10px 10px !important;
     width: 100%;
 }
 
-
-.formSignInBtn:hover{
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e; 
-    border: 1px solid #f0ae4e;
-    color: black;
-}
-  
-.formSignInBtn:focus{
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border: 1px solid #f0ae4e;
+.formSignInBtn:hover {
+    background-color: #f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
+    border: 1px solid#f15654;
     color: black;
 }
 
+.formSignInBtn:focus {
+    background-color: #f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
+    border: 1px solid#f15654;
+    color: black;
+}
 
-.signUpTxt{
+.signUpTxt {
     cursor: pointer;
-    color: #f0ae4e;
+    color: #f15654;
     text-decoration: underline;
 }
 
-.signUpTxt:hover{
-    color: #f09204;
+.signUpTxt:hover {
+    color: #f15654;
 }
-

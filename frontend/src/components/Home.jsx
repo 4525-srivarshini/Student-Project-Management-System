@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import '../stylesheets/Home.css';
+import '../stylesheets/home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col, Container, Navbar, Fade, Button, ListGroup, Badge } from 'react-bootstrap';
 import { UserContext } from '../App';
 import MainNavbar from './MainNavbar';
 import Signup from './Signup';
 import Project from './Projects';
+
 
 const Home = () => {
   const { state } = useContext(UserContext);

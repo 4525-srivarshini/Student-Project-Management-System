@@ -235,12 +235,13 @@ const Signup = () => {
                 <Container className='signInCont'>
                     <Row>
                     <Container className='headingCont'>
-                            <h4>Student Project Management System</h4> 
+                            <h4 style={{color: '#f15654'}}>Student Project Management System</h4> 
                         </Container>
                         <br></br><br></br>
                         <Container className='headingCont'>
-                            <h4>SignIn</h4> 
+                            <h4 style={{color: '#f15654'}}>Login</h4> 
                         </Container>
+
                     </Row>
                     <Row>
                         <Container className='signinFormCont'>
@@ -250,21 +251,21 @@ const Signup = () => {
                                     <Form.Control type="text" className='formInput' value={userEmail} onChange={(e)=>setUserEmail(e.target.value)} placeholder="Enter email" required />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
-        <Form.Label>Password</Form.Label>
-        <InputGroup>
-          <Form.Control
-            type={showPassword ? 'text' : 'password'}
-            className='formInput'
-            value={userPassword}
-            onChange={(e)=>setUserPassword(e.target.value)}
-            placeholder="Password"
-            required
-          />
-          <InputGroup.Text onClick={handlePasswordToggle} style={{cursor: 'pointer'}}>
-            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-          </InputGroup.Text>
-        </InputGroup>
-      </Form.Group>
+                                    <Form.Label>Password</Form.Label>
+                                    <InputGroup>
+                                    <Form.Control
+                                        type={showPassword ? 'text' : 'password'}
+                                        className='formInput'
+                                        value={userPassword}
+                                        onChange={(e)=>setUserPassword(e.target.value)}
+                                        placeholder="Password"
+                                        required
+                                    />
+                                    <InputGroup.Text onClick={handlePasswordToggle} style={{cursor: 'pointer'}}>
+                                        <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                                    </InputGroup.Text>
+                                    </InputGroup>
+                                </Form.Group>
                                 <br></br>
                                 <Form.Group className="mb-3" >
                                     <Button className='formSignInBtn' variant="primary" type="submit" >

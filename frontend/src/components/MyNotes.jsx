@@ -87,6 +87,7 @@ const MyNotes = () => {
                         <p>Date: {element.noteDate.substring(0,10)}</p>
                       </ListGroup.Item>
                       <br></br>
+                      <p>Edit and Delete By clicking on that Note</p>
                     </Col>
                   )}
                 </Row>

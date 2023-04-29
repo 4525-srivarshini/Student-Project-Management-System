@@ -3,9 +3,78 @@ const router = express.Router();
 
 const Project = require('../models/project');
 
-router.get('/projects', async(req, res) => {
+// Get distinct project types
+router.get('/projectTypes', async(req, res) => {
     try {
-        const projects = await Project.find({}, { projectCreator: 1, teamNo: 1, projectTitle: 1, members: 1 })
+        const projectTypes = await Project.distinct('projectType').lean();
+        res.status(200).json(projectTypes);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Server Error');
+    }
+});
+
+// Get projects based on selected project type
+router.get('/projectsByType/:projectType', async(req, res) => {
+    const { projectType } = req.params;
+
+    try {
+        const projects = await Project.aggregate([{
+                $match: { projectType }
+            },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'projectCreator',
+                    foreignField: '_id',
+                    as: 'projectCreatorDetails'
+                }
+            },
+            {
+                $unwind: '$projectCreatorDetails'
+            },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'members.memberRef',
+                    foreignField: '_id',
+                    as: 'membersDetails'
+                }
+            },
+            {
+                $project: {
+                    projectTitle: 1,
+                    projectCreatorId: '$projectCreator',
+                    projectCreatorName: '$projectCreatorDetails.name',
+                    projectCreatorEmail: '$projectCreatorDetails.email',
+                    projectCreatorRegistrationNo: '$projectCreatorDetails.registrationNo',
+                    projectCreatorUserType: '$projectCreatorDetails.userType',
+                    members: {
+                        $map: {
+                            input: '$members',
+                            as: 'member',
+                            in: {
+                                $mergeObjects: [
+                                    '$$member',
+                                    {
+                                        $arrayElemAt: [{
+                                            $filter: {
+                                                input: '$membersDetails',
+                                                as: 'memberDetail',
+                                                cond: {
+                                                    $eq: ['$$memberDetail._id', '$$member.memberRef']
+                                                }
+                                            }
+                                        }, 0]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    teamNo: 1
+                }
+            }
+        ]);
 
         res.status(200).json(projects);
     } catch (error) {
@@ -13,5 +82,8 @@ router.get('/projects', async(req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
+
+
 
 module.exports = router;

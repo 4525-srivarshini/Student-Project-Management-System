@@ -1,9 +1,16 @@
 const mongoose = require('mongoose');
+
+
+
 const project = new mongoose.Schema({
     projectCreator: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    projectCreatorName: {
+        type: String,
+        ref: 'User',
     },
     teamNo: {
         type: String,
@@ -61,18 +68,17 @@ const project = new mongoose.Schema({
         name: {
             type: String,
             required: true,
-            ref: 'User.name',
         },
         registrationNo: {
             type: String,
             required: true,
-            ref: 'User.registrationNo',
         },
         userType: {
             type: String,
-            ref: 'User.userType',
+            required: true
         }
     }],
+
 
 
     projectPhases: [{

@@ -295,45 +295,57 @@ const Messages = () => {
                 <Modal.Title>Chat Box</Modal.Title>
                 <Button className='refreshBtn' onClick={handleRefreshCompnent}><i className="material-icons refreshIcon">refresh</i></Button>
             </Modal.Header>
-        <Modal.Body className='modalBody'>
-            <Container>
-                <Row className="justify-content-md-center">
-                    {allfriends.map( (allfriends, index) =>
+            <Modal.Body className='modalBody'>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div>
+                <Container>
+                    <Row style={{ flexWrap: 'wrap' }}>
+                    {allfriends.map((friend, index) =>
                         <Col sm lg="3" key={index}>
-                            <ListGroup.Item as="li"  id={allfriends._id} onClick={handleClick} className="profileMessages">
-                                <img 
-                                    src={allfriends.image}
-                                    id={allfriends._id}
-                                    onClick={handleClick}
-                                    onError={(e)=>{e.target.onError = null; e.target.src = image_S1}}
-                                    className="profileImages"
-                                />
-                                <br></br>
-                                <b>{allfriends.name}</b>
-                            </ListGroup.Item>
+                        <ListGroup.Item as="li" id={friend._id} onClick={handleClick} className="profileMessages">
+                            <img
+                            src={friend.image}
+                            id={friend._id}
+                            onClick={handleClick}
+                            onError={(e) => { e.target.onError = null; e.target.src = image_S1 }}
+                            className="profileImages"
+                            />
                             <br></br>
+                            <b>{friend.name}</b>
+                            <br></br>
+                            <b>{friend.registrationNo}</b>
+                        </ListGroup.Item>
+                        <br></br>
                         </Col>
                     )}
-                    {groupChats.map( (element, index) =>
+                    </Row>
+                </Container>
+                </div>
+                <div>
+                <Container>
+                <Row>
+                    {groupChats.map((group, index) =>
                         <Col sm lg="3" key={index}>
-                            <ListGroup.Item as="li"  id={element._id} onClick={handleGroupClick} className="profileMessages">
-                                <img 
-                                    src={image_S2}
-                                    id={element._id}
-                                    onClick={handleGroupClick}
-                                    onError={(e)=>{e.target.onError = null; e.target.src = image_S1}}
-                                    className="profileImages"
-                                />
-                                <br></br>
-                                <b>{element.groupName}</b>
-                            </ListGroup.Item>
+                        <ListGroup.Item as="li" id={group._id} onClick={handleGroupClick} className="profileMessages">
+                            <img
+                            src={image_S2}
+                            id={group._id}
+                            onClick={handleGroupClick}
+                            onError={(e) => { e.target.onError = null; e.target.src = image_S1 }}
+                            className="profileImages"
+                            />
                             <br></br>
+                            <b>{group.groupName}</b>
+                        </ListGroup.Item>
+                        <br></br>
                         </Col>
                     )}
-                </Row>  
-            </Container>     
-        </Modal.Body>
-      </Modal>
+                    </Row>
+                </Container>
+                </div>
+            </div>
+            </Modal.Body>
+</Modal>
 
 
 
@@ -370,6 +382,7 @@ const Messages = () => {
         <Modal.Body className='modalBodyMsg'>
             {selectedId ?
                 <Container>  
+                    
                     <ListGroup>                 
                     {allMessages.map( (allMessages, index) =>                              
                         <ListGroup.Item className={allMessages.sender === state.id ? "myMsgs" : "otherMsgs"} key={index}>

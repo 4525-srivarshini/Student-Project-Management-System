@@ -1,18 +1,21 @@
 .background {
-    background: url('../images/WhatsApp Image 2023-04-09 at 12.46.28 PM.jpeg') no-repeat center center fixed;
-    background-size: cover;
+    background: url('../images/output-onlinepngtools.png') no-repeat center center fixed;
+    background-size: 50% auto;
+    /* set height to 50% and width to auto */
     height: 100vh;
+    fill-opacity: 0.5;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0%;
+    background-color: #dad9d7;
 }
 
 .background2 {
     /* background-color: #282c34; */
     background: rgba(247, 247, 247, 255) !important;
-    background-image: url('../images/WhatsApp\ Image\ 2023-04-09\ at\ 12.46.28\ PM.jpeg');
+    background-image: url('../images/WhatsApp_Image_2023-04-09_at_12.46.28_PM-removebg-preview.png');
     background-size: 100% 100%;
     width: 100vw;
     height: 100vh;
@@ -32,10 +35,11 @@
 }
 
 .modalHeader {
-    background: dodgerblue;
+    background: #ed2f00;
     color: black;
     border: 1px solid white;
     border-bottom: none;
+    cursor: move;
 }
 
 .modalBody {
@@ -46,7 +50,7 @@
 }
 
 .modalBodyStatic {
-    background: rgb(173, 218, 230);
+    background: white;
     color: black;
     border: 1px solid white;
     border-top: none;
@@ -54,7 +58,7 @@
 }
 
 .modalFooter {
-    background: dodgerblue;
+    background: rgb(56, 5, 5);
     color: #dad9d7;
     border: 1px solid #dad9d7;
     border-top: none;

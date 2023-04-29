@@ -343,8 +343,9 @@ const Projects = ({props}) => {
                     <Form.Group className="mb-3 inputGroup" >
                         <Form.Label >Type</Form.Label>
                         <Form.Select name='projectType' id='projectType' onChange={handleInputs} value={projectDetails.projectType} className='formInput'>                
-                            <option className='listOption' value='Personal'>Personal</option>
-                            <option className='listOption' value='Team'>Team</option>
+                            <option className='listOption' value='MiniProject'>Mini Project</option>
+                            <option className='listOption' value='FinalProject'>Final Project</option>
+                            <option className='listOption' value='SRP'>SRP</option>
                         </Form.Select>
                     </Form.Group>
 

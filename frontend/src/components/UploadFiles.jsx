@@ -7,6 +7,9 @@ const UploadXlsx = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [file, setFile] = useState(null);
+  const [url, setUrl] = useState();
+ 
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -25,6 +28,10 @@ const UploadXlsx = () => {
       });
   };
 
+  function FileDownload({ fileUrl }) {
+    const [url, setUrl] = useState(fileUrl);
+  }
+
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -32,14 +39,12 @@ const UploadXlsx = () => {
   return (
     <>
       <ListGroup.Item className='navList' onClick={handleShow}>
-        <i className='fas fa-tasks'>&nbsp;</i>
-        {' '}
-        Upload XLSX
+        Upload Files
       </ListGroup.Item>
 
       <Modal  fullscreen={fullscreen} show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Upload XLSX</Modal.Title>
+          <Modal.Title>Upload Files</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit}>
@@ -54,6 +59,8 @@ const UploadXlsx = () => {
             </div>
             <button type='submit' className='btn btn-primary'>Upload</button>
           </form>
+
+         {/*} <p>Please upload the file in format. <a href={url} download>Download the file</a></p>*/}
         </Modal.Body>
       </Modal>
 

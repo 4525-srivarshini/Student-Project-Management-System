@@ -5,6 +5,7 @@ const multer = require("multer");
 
 const upload = multer({ dest: 'uploads/' });
 
+
 const User = require('../models/userSchema');
 const Chat = require('../models/chatSchema');
 const Project = require('../models/project');
@@ -30,24 +31,19 @@ module.exports = router.post('/createNewProject', userAuth, upload.array("projec
             filePath: element.path,
             fileType: element.mimetype,
             fileSize: element.size,
-            fileUrl: element.url,
+            fileUrl: element.fileUrl
         }
         allfiles.push(fileObj);
     });
 
-
-    projectDesig.map(async(element) => {
-        const user = await User.findById(element.id, { name: 1, registrationNo: 1, userType: 1 });
-        const memberObj = {
+    projectDesig.map((element) => {
+        let memberObj = {
             memberRef: element.id,
             designation: element.desg,
-            name: user.name,
-            registrationNo: user.registrationNo,
-            userType: user.userType
-        };
+
+        }
         allMembers.push(memberObj);
     });
-
 
     projectPhases.map((element, index) => {
         let phaseObj = {
@@ -131,7 +127,7 @@ module.exports = router.get('/getProjects', userAuth, async(req, res) => {
 
 
 module.exports = router.post('/updatingProject', userAuth, upload.array("projectFiles"), async(req, res) => {
-    const { projectTitle, projectDiscription, startDate, dueDate, projectType } = req.body;
+    const { teamNo, projectTitle, startDate, dueDate, projectType } = req.body;
     const projectId = JSON.parse(req.body.projectId)
     const projectMembers = JSON.parse(req.body.projectMembers)
     const projectDesig = JSON.parse(req.body.projectDesig)
@@ -152,6 +148,7 @@ module.exports = router.post('/updatingProject', userAuth, upload.array("project
                 filePath: element.filePath,
                 fileType: element.fileType,
                 fileSize: element.fileSize,
+                fileUrl: element.fileUrl,
             }
             allfiles.push(fileObj)
         })
@@ -163,6 +160,7 @@ module.exports = router.post('/updatingProject', userAuth, upload.array("project
             filePath: element.path,
             fileType: element.mimetype,
             fileSize: element.size,
+            fileUrl: element.fileUrl,
         }
         allfiles.push(fileObj)
     })
@@ -188,8 +186,8 @@ module.exports = router.post('/updatingProject', userAuth, upload.array("project
     try {
         const findProject = await Project.updateOne({ _id: projectId }, {
             $set: {
+                "teamNo": teamNo,
                 "projectTitle": projectTitle,
-                "projectDiscription": projectDiscription,
                 "startDate": new Date(startDate),
                 "dueDate": new Date(dueDate),
                 "projectType": projectType,
@@ -202,7 +200,7 @@ module.exports = router.post('/updatingProject', userAuth, upload.array("project
 
         const findChat = await Chat.updateOne({ projectRef: projectId }, {
             users: chatMembers,
-            groupName: projectTitle,
+            groupName: teamNo,
         });
 
 
@@ -213,6 +211,7 @@ module.exports = router.post('/updatingProject', userAuth, upload.array("project
         console.log(error)
     }
 });
+
 
 
 module.exports = router.post('/deleteProject', userAuth, async(req, res) => {
@@ -265,7 +264,7 @@ module.exports = router.post('/assignProjectPhases', userAuth, async(req, res) =
 });
 
 
-module.exports = router.post('/showProjectPhases', userAuth, async(req, res) => {
+module.exports = router.post('/showProjectPhases', async(req, res) => {
     const selectedProjectId = req.body.selectedProjectId;
     const selectedProjectCreator = req.body.selectedProjectCreator;
 

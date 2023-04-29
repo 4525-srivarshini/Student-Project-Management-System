@@ -163,8 +163,9 @@ const DisplayProjects = (props) => {
                     {/* <Button className='refreshBtn2' onClick={handleRefreshCompnent}><i className="material-icons refreshIcon">refresh</i></Button> */}
                     <br></br>
                     <Row className="justify-content-md-center">
-                        {projects.map((project, index)=>
-                            <Col xs lg="5" key={index}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                            {projects.map((project, index) => (
+                                <Col xs lg="5" key={index}>
                                 <ListGroup.Item className='projectListItem' id={project._id} onClick={clickedProject}>
                                     <b>{project.teamNo}</b><b className='projectOwner'>My Project</b>
                                     <br></br>
@@ -174,8 +175,10 @@ const DisplayProjects = (props) => {
                                     <p>Due Date: {project.dueDate.substring(0,10)}</p>
                                 </ListGroup.Item>
                                 <br></br>
-                            </Col>
-                        )}
+                                </Col>
+                            ))}
+                            </div>
+
                         {assignedProjects.map((project, index)=>
                             <Col xs lg="5" key={index}>
                                 <ListGroup.Item className='projectListItem' id={project._id} onClick={clickedAssignedProject}>
@@ -195,7 +198,17 @@ const DisplayProjects = (props) => {
         </Modal>
 
 
-        <Modal size="sm" show={smShow} onHide={handleHideSelectionModal} aria-labelledby="example-modal-sizes-title-sm" >
+        <Modal size="sm" show={smShow} onHide={handleHideSelectionModal} aria-labelledby="example-modal-sizes-title-sm" draggable={true} // add this prop to make the modal draggable
+            onDragStart={(e) => {
+                e.stopPropagation();
+                document.body.classList.add("dragging"); // add a class to the body to change the cursor style
+            }}
+            onDragEnd={(e) => {
+                e.stopPropagation();
+                document.body.classList.remove("dragging"); // remove the class when dragging ends
+            }}
+            >
+
             <Modal.Header closeButton className='modalHeader'>
                 <Modal.Title id="example-modal-sizes-title-sm" className='titleSelection'>
                     Choose For Selected Project

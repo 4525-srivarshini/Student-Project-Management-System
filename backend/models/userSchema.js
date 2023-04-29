@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema({
     },
     registrationNo: {
         type: String,
-        unique: true
     },
     userPassword: {
         type: String,
@@ -40,6 +39,9 @@ const userSchema = new mongoose.Schema({
         type: String,
     },
     imageSize: {
+        type: String,
+    },
+    batchNo: {
         type: String,
     },
     friends: [{

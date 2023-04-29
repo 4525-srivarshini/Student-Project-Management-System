@@ -426,10 +426,10 @@ const UpdateProject = ({projectData}) => {
                     <Col>
                     <Form.Group className="mb-3 inputGroup" >
                         <Form.Label className='formTxt'>Type</Form.Label>
-                        <Form.Select name='projectType' id='projectType' className='formInput' defaultValue={projectData.currentProject.projectType}>                
-                            <option className='listOption' value='N/A'>N/A</option>               
-                            <option className='listOption' value='Personal'>Personal</option>               
-                            <option className='listOption' value='Team'>Team</option>              
+                        <Form.Select name='projectType' id='projectType' className='formInput' defaultValue={projectData.currentProject.projectType}>             
+                            <option className='listOption' value='MiniProject'>Mini Project</option>
+                            <option className='listOption' value='FinalProject'>Final Project</option>
+                            <option className='listOption' value='SRP'>SRP</option>              
                         </Form.Select>
                     </Form.Group>
   

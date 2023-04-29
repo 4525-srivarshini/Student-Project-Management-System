@@ -26,9 +26,20 @@ const  SupervisorDetails = () => {
     setEditSpecialization(supervisor.specialization);
   };
 
-  const handleDelete = (id) => {
-    // add logic to delete the student with the specified id
-  };
+ const handleDelete = (id) => {
+  fetch(`/supervisors/deleteSupervisor/${id}`, {
+    method: 'DELETE'
+  })
+  .then(response => {
+    if (response.ok) {
+      setsupervisor(prevSupervisors => prevSupervisors.filter(supervisor => supervisor._id !== id));
+    } else {
+      throw new Error('Error deleting supervisor');
+    }
+  })
+  .catch(error => console.error(error));
+};
+
 
   const handleShow = () => {
     setShow(true);
@@ -85,7 +96,7 @@ const  SupervisorDetails = () => {
         </Modal.Header>
         <Modal.Body>
           <Button variant='primary' className='mb-3'>
-            <CSVLink data={csvData} headers={headers}>
+            <CSVLink data={csvData} headers={headers} style={{color: 'white'}}>
               Download
             </CSVLink>
           </Button>

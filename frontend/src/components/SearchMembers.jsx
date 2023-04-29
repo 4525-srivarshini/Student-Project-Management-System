@@ -206,9 +206,7 @@ const SearchMembers = ({props}) => {
                                     onError={(e)=>{e.target.onError = null; e.target.src = image_S1}}
                                     className="profileImages"
                                 />
-                                    <button onClick={handleDblClick}>
-                                        <h5>{searchResult.name}</h5>
-                                    </button>
+                                        <p style={{color: 'black'}}>{searchResult.name}</p>
 
                                     {selectedUser && (
                                         <div>

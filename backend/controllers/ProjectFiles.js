@@ -3,9 +3,16 @@ const router = express.Router();
 
 const Project = require('../models/project');
 
-router.get('/projectFiles', async(req, res) => {
+router.get('/projectFilesByType/:projectType', async(req, res) => {
+    const { projectType } = req.query;
+
     try {
-        const projects = await Project.find({}, { teamNo: 1, projectTitle: 1, projectFiles: 1 })
+        let query = {};
+        if (projectType) {
+            query = { projectType };
+        }
+
+        const projects = await Project.find(query, { teamNo: 1, projectTitle: 1, projectFiles: 1 });
 
         projects.forEach((project) => {
             project.projectFiles.forEach((file) => {
@@ -19,6 +26,7 @@ router.get('/projectFiles', async(req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
 
 
 module.exports = router;

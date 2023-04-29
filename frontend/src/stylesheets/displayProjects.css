@@ -10,23 +10,22 @@
 .selectedListItem {
     text-align: center;
     cursor: pointer;
-    background-color: #f0ae4e;
-    ;
+    background-color: #f15654;
     color: black !important;
-    border: 1px solid #f0ae4e;
+    border: 1px solid#f15654;
     border-radius: 25px 10px 25px 10px !important;
 }
 
 .selectedListItem:hover {
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border: 1px solid #f0ae4e;
+    background-color: #f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
+    border: 1px solid#f15654;
 }
 
 .selectedListItem:focus {
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border: 1px solid #f0ae4e;
+    background-color: #f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
+    border: 1px solid #f15654;
 }
 
 .warningTxt {
@@ -41,92 +40,90 @@
 }
 
 .assignBtn {
-    color: #f0ae4e;
+    color: #f15654;
     text-decoration: underline;
     cursor: pointer;
 }
 
 .assignBtn:hover {
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
+    box-shadow: 0px 0px 10px 1px#f15654;
     border-radius: 25px 10px 25px 10px;
 }
 
 .listPhase {
     border: none;
     background-color: transparent;
-    color: #dad9d7;
+    color: black;
 }
 
 .removeBtnPhase {
     cursor: pointer;
-    color: #f0ae4e;
+    color: #f15654;
     float: right;
     margin-top: 5px;
 }
 
 .removeBtnPhase:hover {
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
+    box-shadow: 0px 0px 10px 1px#f15654;
 }
 
 .phaseSaveBtn {
-    background-color: #f0ae4e;
-    ;
+    background-color: #f15654;
     color: black;
     width: 8rem;
     margin: auto;
-    border: 1px solid #f0ae4e;
+    border: 1px solid #f15654;
     border-radius: 25px 10px 25px 10px !important;
 }
 
 .phaseSaveBtn:hover {
-    background-color: #f0ae4e;
-    border: 1px solid #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
+    background-color: #f15654;
+    border: 1px solid #f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
     color: black;
 }
 
 .phaseSaveBtn:focus {
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border: #f0ae4e;
+    background-color: #f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
+    border: #f15654;
     color: black;
 }
 
 .saveBtn {
-    background-color: #f0ae4e;
-    ;
+    background-color: #f15654;
     color: black;
     width: 40%;
     margin: auto;
-    border: 1px solid #f0ae4e;
+    border: 1px solid#f15654;
     border-radius: 25px 10px 25px 10px !important;
 }
 
 .saveBtn:hover {
-    background-color: #f0ae4e;
-    border: 1px solid #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
+    background-color: #f15654;
+    border: 1px solid #f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
     color: black;
 }
 
 .saveBtn:focus {
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border: #f0ae4e;
+    background-color: #f15654;
+    box-shadow: 0px 0px 10px 1px #f15654;
+    border: #f15654;
     color: black;
 }
 
 .completedBtn {
     float: right;
-    color: #f0ae4e;
+    color: #f15654;
     cursor: pointer;
     border-radius: 20px;
 }
 
 .completedBtn:hover {
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border: #f0ae4e;
+    background-color: #f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
+    border: #f15654;
     color: black;
 }
 
@@ -136,40 +133,41 @@
 }
 
 .projectListItem {
-    background-color: dodgerblue !important;
+    background-color: #f15654 !important;
     color: #dad9d7;
     border: 1px solid #dad9d7;
-    border-radius: 15px 10px 25px 10px !important;
+    border-radius: 10px 10px 10px 10px !important;
     box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.63);
     cursor: pointer;
     display: block;
+    margin: 10px;
 }
 
 .projectListItem:hover {
-    border: 1px solid #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
+    border: 1px solid#f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
     cursor: pointer;
 }
 
 .dropBtn {
     cursor: pointer;
-    background-color: #f0ae4e;
+    background-color: #f15654;
     ;
     color: black !important;
-    border: 1px solid #f0ae4e;
+    border: 1px solid#f15654;
     border-radius: 25px 10px 25px 10px !important;
 }
 
 .dropBtn:hover {
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border: 1px solid #f0ae4e;
+    background-color: #f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
+    border: 1px solid#f15654;
 }
 
 .dropBtn:focus {
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border: 1px solid #f0ae4e;
+    background-color: #f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
+    border: 1px solid#f15654;
 }
 
 .dropDownCont {
@@ -196,21 +194,21 @@
 
 .downloadBtn {
     cursor: pointer;
-    background-color: #f0ae4e;
+    background-color: #f15654;
     ;
     color: black !important;
-    border: 1px solid #f0ae4e;
+    border: 1px solid#f15654;
     float: right;
 }
 
 .downloadBtn:hover {
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border: 1px solid #f0ae4e;
+    background-color: #f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
+    border: 1px solid #f15654;
 }
 
 .downloadBtn:focus {
-    background-color: #f0ae4e;
-    box-shadow: 0px 0px 10px 1px #f0ae4e;
-    border: 1px solid #f0ae4e;
+    background-color: #f15654;
+    box-shadow: 0px 0px 10px 1px#f15654;
+    border: 1px solid#f15654;
 }

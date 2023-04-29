@@ -11,24 +11,23 @@ router.post('/upload', upload.single('file'), async(req, res) => {
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const data = xlsx.utils.sheet_to_json(worksheet);
 
-    const uniqueData = data.filter((value, index, self) =>
-        index === self.findIndex((v) => (
-            v.registrationNo === value.registrationNo &&
-            v.name === value.name &&
-            v.email === value.email
-        ))
-    );
+    const users = data.map(row => {
+        if (row.userType === 'Student' && !row.registrationNo) {
+            throw new Error('Registration number is mandatory for student user type');
+        }
 
-    const users = uniqueData.map(row => ({
-        name: row.name,
-        email: row.email,
-        registrationNo: row.registrationNo,
-        userType: row.userType,
-        cgpa: row.cgpa,
-        specialization: row.specialization,
-        userPassword: row.userPassword,
-        userCnfrmPass: row.userCnfrmPass
-    }));
+        return {
+            name: row.name,
+            email: row.email,
+            registrationNo: row.registrationNo ? row.registrationNo : null,
+            userType: row.userType,
+            cgpa: row.cgpa,
+            specialization: row.specialization,
+            userPassword: row.userPassword,
+            userCnfrmPass: row.userCnfrmPass,
+            batchNo: row.batchNo
+        }
+    });
 
     try {
         await User.insertMany(users);
@@ -38,6 +37,5 @@ router.post('/upload', upload.single('file'), async(req, res) => {
         res.status(500).send('Error uploading file');
     }
 });
-
 
 module.exports = router;
