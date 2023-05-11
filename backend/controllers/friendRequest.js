@@ -7,7 +7,7 @@ const User = require('../models/userSchema');
 const FriendRequest = require('../models/friendRequest');
 const Chat = require('../models/chatSchema');
 
-
+//view friends
 module.exports = router.get('/getFriends', userAuth, async(req, res) => {
     const getUser = await User.findOne({ _id: req.userID });
     let friendsProfile = [];
@@ -34,7 +34,7 @@ module.exports = router.get('/getFriends', userAuth, async(req, res) => {
     }
 });
 
-
+//dending request
 module.exports = router.post('/sendingRequest', userAuth, async(req, res) => {
     const personId = req.body.personId;
     const senderRequestExist = await FriendRequest.findOne({ sender: req.userID, receiver: personId });
@@ -61,6 +61,7 @@ module.exports = router.post('/sendingRequest', userAuth, async(req, res) => {
         console.log(error)
     }
 });
+
 
 module.exports = router.get('/requestSentBYMe', userAuth, async(req, res) => {
     const getRequests = await FriendRequest.find({ sender: req.userID, isAccepted: false });

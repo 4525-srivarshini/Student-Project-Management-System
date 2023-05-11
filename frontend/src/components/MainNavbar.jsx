@@ -24,7 +24,6 @@ const MainNavbar = ({ userType }) => {
     dispatch({ type: 'SET_USER_TYPE', payload: userType });
   }, [userType]);
 
-  console.log('UserType : ', state.userType);
   return (
     <Navbar expand="md" fixed="top" className="navbarMain justify-content-end">
       <Container>
@@ -36,14 +35,17 @@ const MainNavbar = ({ userType }) => {
           <Nav className="me-auto navItems">
             {state.userType === 'student' || state.userType === 'supervisor' ? (
               <>
+                <Nav.Link href="#searchMembers" className="navLinks">
+                  <Notifications />
+                </Nav.Link>
+                <Nav.Link href="#projects" className="navLinks">
+                  <DisplayProjects />
+                </Nav.Link>
                 <Nav.Link href="#todos" className="navLinks">
                   <Todos />
                 </Nav.Link>
                 <Nav.Link href="#todos" className="navLinks">
                   <MyNotes />
-                </Nav.Link>
-                <Nav.Link href="#projects" className="navLinks">
-                  <DisplayProjects />
                 </Nav.Link>
                 <Nav.Link href="#messages" className="navLinks">
                   <Messages />
@@ -51,9 +53,7 @@ const MainNavbar = ({ userType }) => {
                 <Nav.Link href="#calendar" className="navLinks">
                   <Eventscalendar />
                 </Nav.Link>
-                <Nav.Link href="#searchMembers" className="navLinks">
-                  <Notifications />
-                </Nav.Link>
+                
                 <Nav.Link href="#searchMembers" className="navLinks">
                   <Profile />
                 </Nav.Link>
@@ -69,7 +69,6 @@ const MainNavbar = ({ userType }) => {
               <Nav.Link href="#supervisorDetails" className="navLinks">
                  <SupervisorDetails/>
               </Nav.Link>
-              
               <Nav.Link href="#searchMembers" className="navLinks">
                   <ProjectDetails/>
               </Nav.Link>
@@ -77,10 +76,12 @@ const MainNavbar = ({ userType }) => {
                   <ProjectFile/>
               </Nav.Link>
               <Nav.Link href="#searchMembers" className="navLinks">
+                  <Notifications />
+                </Nav.Link>
+              <Nav.Link href="#searchMembers" className="navLinks">
                   <Profile />
               </Nav.Link>
               </>
-
             ) : null}
           </Nav>
         </Navbar.Collapse>
