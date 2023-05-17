@@ -18,11 +18,20 @@ router.get('/students', async(req, res) => {
     }
 });
 
-router.get('/students/:batchNo', async(req, res) => {
+
+router.get('/students/batches', async(req, res) => {
     try {
-        const batchNo = req.params.batchNo;
-        const users = await User.find({ userType: "student", batchNo: batchNo });
-        res.status(200).json(users);
+        const studentCounts = await User.aggregate([
+            { $match: { userType: 'student' } },
+            {
+                $group: {
+                    _id: '$batchNo',
+                    count: { $sum: 1 },
+                },
+            },
+        ]);
+
+        res.status(200).json(studentCounts);
     } catch (error) {
         console.log(error);
         res.status(500).send('Server Error');
@@ -30,6 +39,41 @@ router.get('/students/:batchNo', async(req, res) => {
 });
 
 
+router.get('/students/:batchNo', async(req, res) => {
+    try {
+        const batchNo = req.params.batchNo;
+
+        // Get unique sections for the batch
+        const uniqueSections = await User.distinct('section', {
+            userType: 'student',
+            batchNo: batchNo
+        });
+
+        res.status(200).json({ sections: uniqueSections });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.get('/students/:batchNo/:section', async(req, res) => {
+    try {
+        const batchNo = req.params.batchNo;
+        const section = req.params.section;
+
+        // Fetch students with the selected section in the specified batch
+        const students = await User.find({
+            userType: 'student',
+            batchNo: batchNo,
+            section: section
+        });
+
+        res.status(200).json(students);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Server Error');
+    }
+});
 
 
 router.delete('/students/deleteStudents/:id', async(req, res) => {

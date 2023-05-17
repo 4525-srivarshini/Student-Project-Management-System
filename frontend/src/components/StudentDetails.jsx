@@ -23,8 +23,8 @@ const StudentDetails = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  const handleDelete = () => {
-    const ids = selectedStudents.map((student) => student._id);
+  const handleDelete = (studentId) => {
+    const ids = [studentId];
     fetch('/students/delete', {
       method: 'DELETE',
       headers: {
@@ -36,11 +36,11 @@ const StudentDetails = () => {
         if (response.ok) {
           if (selectedBatch) {
             setBatchStudents(prevBatchStudents =>
-              prevBatchStudents.filter(student => !ids.includes(student._id))
+              prevBatchStudents.filter(student => student._id !== studentId)
             );
           } else {
             setStudents(prevStudents =>
-              prevStudents.filter(student => !ids.includes(student._id))
+              prevStudents.filter(student => student._id !== studentId)
             );
           }
           setSelectedStudents([]);
@@ -60,7 +60,25 @@ const StudentDetails = () => {
   };
 
   const handleDeleteAll = () => {
-    setSelectedStudents(batchStudents.length > 0 ? [...batchStudents] : [...students]);
+    const ids = selectedStudents.map(student => student._id);
+    fetch('/students/delete', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ ids })
+    })
+      .then(response => {
+        if (response.ok) {
+          setBatchStudents(prevBatchStudents =>
+            prevBatchStudents.filter(student => !ids.includes(student._id))
+          );
+          setSelectedStudents([]);
+        } else {
+          throw new Error('Error deleting students');
+        }
+      })
+      .catch(error => console.error(error));
   };
 
   const handleSelectStudent = (student) => {
@@ -91,45 +109,50 @@ const StudentDetails = () => {
     registrationNo: student.registrationNo,
   })) : [];
 
-  return (
-    <>
-      <ListGroup.Item className='navList' onClick={handleShow}>
-        {' '}
-        Student Details
-      </ListGroup.Item>
+  return(
+  <>
+  <ListGroup.Item className='navList' onClick={handleShow}>
+    {' '}
+    Student Details
+  </ListGroup.Item>
 
-      <Modal fullscreen={fullscreen} show={showAlert} onHide={() => setShowAlert(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Student Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div>
-            <Button variant='secondary' onClick={resetBatchSelection} className='mb-3'>
-              Home
-              </Button>
-              <Button variant='primary' className='mb-3' style={{ marginLeft: '10px' }}>
-              <CSVLink data={csvData} headers={headers} style={{ color: 'white' }}>
-              Download
-              </CSVLink>
-              </Button>
-              {selectedBatch && batchStudents.length > 0 && (
-              <Button variant='danger' className='mb-3' onClick={() => handleDeleteAll()} style={{ marginLeft: '10px' }}>
-              Select All & Delete
-              </Button>
-              )}
-          </div>
-              <Table striped bordered>
-                <thead>
-                  {selectedBatch ? (
-                    <tr>
-                      <th colSpan={6}>Batch No: {selectedBatch} </th>
-                    </tr>
-                  ) : (
-                    <tr>
-                      <th>Batch No</th>
-                    </tr>
-                  )}
-                </thead>
+  <Modal fullscreen={fullscreen} show={showAlert} onHide={() => setShowAlert(false)}>
+    <Modal.Header closeButton>
+      <Modal.Title>Student Details</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <div>
+        <Button variant='secondary' onClick={resetBatchSelection} className='mb-3'>
+          Home
+        </Button>
+        <Button variant='primary' className='mb-3' style={{ marginLeft: '10px' }}>
+          <CSVLink data={csvData} headers={headers} style={{ color: 'white' }}>
+            Download
+          </CSVLink>
+        </Button>
+        {selectedBatch && batchStudents.length > 0 && (
+          <Button
+            variant='danger'
+            className='mb-3'
+            onClick={() => handleDeleteAll()}
+            style={{ marginLeft: '10px' }}
+          >
+            Select All & Delete
+          </Button>
+        )}
+      </div>
+      <Table striped bordered>
+        <thead>
+          {selectedBatch ? (
+            <tr>
+              <th colSpan={6}>Batch No: {selectedBatch} </th>
+            </tr>
+          ) : (
+            <tr>
+              <th>Batch No</th>
+            </tr>
+          )}
+        </thead>
         <tbody>
           {selectedBatch ? (
             batchStudents.length > 0 ? (
@@ -148,8 +171,8 @@ const StudentDetails = () => {
                       <input
                         type='checkbox'
                         value={student._id}
-                        checked={selectedStudents.includes(student._id)}
-                        onChange={(e) => handleSelectStudent(e.target.checked, student._id)}
+                        checked={selectedStudents.some((s) => s._id === student._id)}
+                        onChange={() => handleSelectStudent(student)}
                       />
                     </td>
                     <td>{student.name}</td>
@@ -185,10 +208,3 @@ const StudentDetails = () => {
 };
 
 export default StudentDetails;
-
-
-
-
-
-
-

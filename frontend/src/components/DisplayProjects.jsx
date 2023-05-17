@@ -159,24 +159,24 @@ const DisplayProjects = (props) => {
                 </Container>
             </Modal.Header>
             <Modal.Body className='modalBody'>       
-                <Container>
+  <Container>
                     {/* <Button className='refreshBtn2' onClick={handleRefreshCompnent}><i className="material-icons refreshIcon">refresh</i></Button> */}
                     <br></br>
                     <Row className="justify-content-md-center">
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                            {projects.map((project, index) => (
+        {projects.map((project, index) => (
                                 <Col xs lg="5" key={index}>
                                 <ListGroup.Item className='projectListItem' id={project._id} onClick={clickedProject}>
                                     <b>{project.teamNo}</b><b className='projectOwner'>My Project</b>
                                     <br></br>
                                     <br></br>
-                                    <ProgressBar animated variant="info" now={project.progressBar} label={`${project.progressBar}%`} />
+            <ProgressBar animated variant="info" now={project.progressBar} label={`${project.progressBar}%`} />
                                     <br></br>
                                     <p>Due Date: {project.dueDate.substring(0,10)}</p>
                                 </ListGroup.Item>
                                 <br></br>
                                 </Col>
-                            ))}
+        ))}
                             </div>
 
                         {assignedProjects.map((project, index)=>
@@ -193,8 +193,8 @@ const DisplayProjects = (props) => {
                             </Col>
                         )}
                     </Row>
-                </Container>
-            </Modal.Body>
+  </Container>
+</Modal.Body>
         </Modal>
 
 

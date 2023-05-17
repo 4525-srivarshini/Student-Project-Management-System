@@ -24,5 +24,6 @@ router.use(require('../controllers/StudentDetails'))
 router.use(require('../controllers/SupervisorDetails'))
 router.use(require('../controllers/ProjectDetails'))
 router.use(require('../controllers/ProjectFiles'))
+router.use(require('../controllers/adminDashboard'))
 
 module.exports = router;

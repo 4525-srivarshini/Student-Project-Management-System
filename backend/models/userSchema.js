@@ -44,6 +44,12 @@ const userSchema = new mongoose.Schema({
     batchNo: {
         type: String,
     },
+    department: {
+        type: String,
+    },
+    section: {
+        type: String,
+    },
     friends: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

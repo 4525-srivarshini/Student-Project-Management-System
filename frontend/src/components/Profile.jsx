@@ -74,95 +74,103 @@ function Profile() {
     setState(prevState => ({ ...prevState, [name]: value }));
   };
   return (
-    <>
-     <ListGroup.Item className='navList' onClick={() => setShowAlert(true)}>
-                <i className='fa fa-user-circle'>&nbsp;</i>
-                {' '}
-                Profile
-            </ListGroup.Item>
-      <Modal size="sm" show={showAlert} onHide={() => setShowAlert(false)} aria-labelledby="example-modal-sizes-title-sm">
-  <Modal.Header closeButton className="modalHeader">
-    <Modal.Title id="example-modal-sizes-title-sm">Profile</Modal.Title>
-  </Modal.Header>
-  <Modal.Body className="modalBodyStatic">
-    {state ? (
-      <Container className="profileCont">
-        <Row>
-          <Col>
-            <img
-              src={state.image}
-              onError={(e) => {
-                e.target.onError = null;
-                e.target.src = image_S1;
-              }}
-              className="profileImages"
-            />
-          </Col>
-          <Col>
-            <Row>
-              <h6 className="profileTitle">Name:</h6>
-              <p className="profileData">{state.name}</p>
-            </Row>
-            <Row>
-              <h6 className="profileTitle">Email:</h6>
-              <p className="profileData">{state.email}</p>
-            </Row>
-            {state.userType === "student" && (
-              <>
-                <Row>
-                  <h6 className="profileTitle">Registration No:</h6>
-                  <p className="profileData">{state.registrationNo}</p>
-                </Row>
-                <Row>
-                  <h6 className="profileTitle">CGPA:</h6>
-                  <p className="profileData">{state.cgpa}</p>
-                </Row>
-              </>
-            )}
-            {state.userType === "supervisor" && (
-              <Row>
-                <h6 className="profileTitle">Specialization:</h6>
-                <p className="profileData">{state.specialization}</p>
-              </Row>
-            )}
-            {/*<Row>
-              <Col>
-                <Button variant="primary" onClick={handleShowModal}>
-                  Change Password
-            </Button>
-                
-              </Col>
-            </Row>*/}
-          </Col>
-        </Row>
-      </Container>
-    ) : null}
-  </Modal.Body>
+<>
+  <ListGroup.Item className='navList' onClick={() => setShowAlert(true)}>
+    <i className='fa fa-user-circle'>&nbsp;</i>
+    {' '}
+    Profile
+  </ListGroup.Item>
+  <Modal size="sm" show={showAlert} onHide={() => setShowAlert(false)} aria-labelledby="example-modal-sizes-title-sm">
+    <Modal.Header closeButton className="modalHeader">
+      <Modal.Title id="example-modal-sizes-title-sm">Profile</Modal.Title>
+    </Modal.Header>
+    <Modal.Body className="modalBodyStatic">
+  {state ? (
+    <Container className="profileCont">
+      <Row>
+        <Col>
+          <img
+            src={state.image}
+            onError={(e) => {
+              e.target.onError = null;
+              e.target.src = image_S1;
+            }}
+            className="profileImages"
+          />
+        </Col>
 
-  <Modal.Footer className='modalFooter'>
-                <Button className='saveBtn' onClick={handleSignOut}>SignOut</Button> 
-</Modal.Footer>
-</Modal>
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Change Password</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="oldPassword">
-              <Form.Label>Old Password</Form.Label>
-              <Form.Control type="password" placeholder="Enter old password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
-            </Form.Group>
-            <Form.Group controlId="newPassword">
-              <Form.Label>New Password</Form.Label>
-              <Form.Control type="password" placeholder="Enter new password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-            </Form.Group>
-            <Form.Group controlId="confirmPassword">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control type="password" placeholder="Confirm new password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
+        <Col>
+          <Row>
+            <h6 className="profileTitle">Name:</h6>
+            <p className="profileData">{state.name}</p>
+          </Row>
+
+          <Row>
+            <h6 className="profileTitle">Email:</h6>
+            <p className="profileData">{state.email}</p>
+          </Row>
+
+          {state.userType === "student" && (
+            <>
+              <Row>
+                <h6 className="profileTitle">Registration No:</h6>
+                <p className="profileData">{state.registrationNo}</p>
+              </Row>
+              <Row>
+                <h6 className="profileTitle">CGPA:</h6>
+                <p className="profileData">{state.cgpa}</p>
+              </Row>
+            </>
+          )}
+          {state.userType === "supervisor" && (
+            <Row>
+              <h6 className="profileTitle">Specialization:</h6>
+              <p className="profileData">{state.specialization}</p>
+            </Row>
+          )}
+
+          <Row>
+            <Col>
+              <Button variant="primary" onClick={handleShowModal}>
+                Change Password
+              </Button>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Container>
+  ) : null}
+</Modal.Body>
+
+    
+    <Modal.Footer className='modalFooter'>
+      <Button className='saveBtn' onClick={handleSignOut}>SignOut</Button> 
+    </Modal.Footer>
+  </Modal>
+  
+  <Modal show={showModal} onHide={handleCloseModal}>
+    <Modal.Header closeButton>
+      <Modal.Title>Change Password</Modal.Title>
+    </Modal.Header>
+    
+    <Modal.Body>
+      <Form>
+        <Form.Group controlId="oldPassword">
+          <Form.Label>Old Password</Form.Label>
+          <Form.Control type="password" placeholder="Enter old password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+        </Form.Group>
+        
+        <Form.Group controlId="newPassword">
+          <Form.Label>New Password</Form.Label>
+          <Form.Control type="password" placeholder="Enter new password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+        </Form.Group>
+        
+        <Form.Group controlId="confirmPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control type="password" placeholder="Confirm new password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+        </Form.Group>
+      </Form>
+    </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
             Close

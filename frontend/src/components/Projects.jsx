@@ -342,7 +342,8 @@ const Projects = ({props}) => {
                     <Col>
                     <Form.Group className="mb-3 inputGroup" >
                         <Form.Label >Type</Form.Label>
-                        <Form.Select name='projectType' id='projectType' onChange={handleInputs} value={projectDetails.projectType} className='formInput'>                
+                        <Form.Select name='projectType' id='projectType' onChange={handleInputs} value={projectDetails.projectType} className='formInput'> 
+                        <option className='listOption'>Select ProjectType</option>        
                             <option className='listOption' value='MiniProject'>Mini Project</option>
                             <option className='listOption' value='FinalProject'>Final Project</option>
                             <option className='listOption' value='SRP'>SRP</option>

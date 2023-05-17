@@ -6,7 +6,8 @@ const router = express.Router();
 
 const upload = multer({ dest: 'uploads/' });
 
-router.post('/upload', upload.single('file'), async(req, res) => {
+//uploading a excel so that accounts of students and supervisors accounts can be created
+module.exports = router.post('/upload', upload.single('file'), async(req, res) => {
     const workbook = xlsx.readFile(req.file.path);
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const data = xlsx.utils.sheet_to_json(worksheet);
@@ -25,8 +26,11 @@ router.post('/upload', upload.single('file'), async(req, res) => {
             specialization: row.specialization,
             userPassword: row.userPassword,
             userCnfrmPass: row.userCnfrmPass,
-            batchNo: row.batchNo
+            batchNo: row.batchNo,
+            section: row.section,
+            department: row.department
         }
+        s
     });
 
     try {
@@ -37,5 +41,3 @@ router.post('/upload', upload.single('file'), async(req, res) => {
         res.status(500).send('Error uploading file');
     }
 });
-
-module.exports = router;

@@ -125,6 +125,8 @@ module.exports = router.post('/signInUser', async(req, res) => {
                 cgpa: userExist.cgpa,
                 specialization: userExist.specialization,
                 batchNo: userExist.batchNo,
+                department: userExist.department,
+                section: userExist.section,
             };
 
             let token = await userExist.generateAuthToken();

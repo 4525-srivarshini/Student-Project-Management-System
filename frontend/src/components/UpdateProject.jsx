@@ -427,6 +427,7 @@ const UpdateProject = ({projectData}) => {
                     <Form.Group className="mb-3 inputGroup" >
                         <Form.Label className='formTxt'>Type</Form.Label>
                         <Form.Select name='projectType' id='projectType' className='formInput' defaultValue={projectData.currentProject.projectType}>             
+                        <option className='listOption'>Select ProjectType</option>        
                             <option className='listOption' value='MiniProject'>Mini Project</option>
                             <option className='listOption' value='FinalProject'>Final Project</option>
                             <option className='listOption' value='SRP'>SRP</option>              
