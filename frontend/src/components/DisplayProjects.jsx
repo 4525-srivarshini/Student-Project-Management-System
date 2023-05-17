@@ -262,6 +262,19 @@ const DisplayProjects = (props) => {
 
                 <br></br>
 
+
+                <UpdateProject projectData={{currentProject, allfriends, setFecthTasks}}/>
+                        
+                <br></br>
+
+                <AssignPhases projectData={{currentProject, allfriends, setFecthTasks}}/>
+                        
+                <br></br>
+
+                <ProjectNotification projectData={currentProject}/>
+                        
+                <br></br>
+
             </Modal.Body>
         </Modal>
 

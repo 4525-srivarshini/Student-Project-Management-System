@@ -101,34 +101,35 @@ function Profile() {
 
         <Col>
           <Row>
-            <h6 className="profileTitle">Name:</h6>
-            <p className="profileData">{state.name}</p>
+            <h6 className="profileTitle">Name: {state.name}</h6>
           </Row>
 
           <Row>
-            <h6 className="profileTitle">Email:</h6>
-            <p className="profileData">{state.email}</p>
+            <h6 className="profileTitle">Email: {state.email}</h6>
           </Row>
 
           {state.userType === "student" && (
             <>
               <Row>
-                <h6 className="profileTitle">Registration No:</h6>
-                <p className="profileData">{state.registrationNo}</p>
+                <h6 className="profileTitle">Registration No: {state.registrationNo}</h6>
               </Row>
               <Row>
-                <h6 className="profileTitle">CGPA:</h6>
-                <p className="profileData">{state.cgpa}</p>
+                <h6 className="profileTitle">CGPA: {state.cgpa}</h6>
+              </Row>
+              <Row>
+                <h6 className="profileTitle">Batch No: {state.batchNo}</h6>
+
+              </Row>
+              <Row>
+                <h6 className="profileTitle">Section : {state.section}</h6>
               </Row>
             </>
           )}
           {state.userType === "supervisor" && (
             <Row>
-              <h6 className="profileTitle">Specialization:</h6>
-              <p className="profileData">{state.specialization}</p>
+              <h6 className="profileTitle">Specialization: {state.specialization}</h6>
             </Row>
           )}
-
           <Row>
             <Col>
               <Button variant="primary" onClick={handleShowModal}>

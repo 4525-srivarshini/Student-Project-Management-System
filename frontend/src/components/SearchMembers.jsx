@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import '../stylesheets/searchMembers.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Container, InputGroup, Button, Modal, FormControl, ListGroup, Badge } from 'react-bootstrap';
+import { Row, Col, Container, InputGroup, Button, Modal, FormControl, ListGroup, Badge,OverlayTrigger, Tooltip } from 'react-bootstrap';
 import image_S1 from '../images/abstract10.png'
 import { UserContext } from '../App'
 
@@ -160,6 +160,13 @@ const SearchMembers = ({props}) => {
     const handleDblClick = () => {
         setSelectedUser(searchResult);
       };
+      
+      const [selectedUserId, setSelectedUserId] = useState(null);
+
+    const handleTooltipClick = (userId) => {
+      setSelectedUserId(userId);
+    };
+  
 
   return (
     <>
@@ -178,12 +185,8 @@ const SearchMembers = ({props}) => {
                 <Row>
                     <Col>
                         <InputGroup className="mb-3">
-                        <FormControl
-                            placeholder="Find Members"
-                            type="text"
-                            aria-label="Recipient's username"
-                            aria-describedby="basic-addon2"
-                            value={searchInput}
+                        <FormControl placeholder="Find Members" type="text"  aria-label="Recipient's username"
+                            aria-describedby="basic-addon2" value={searchInput}
                             className='formInput'
                             onChange={handelChange}
                             onKeyDown={handleKeyDown}
@@ -197,36 +200,50 @@ const SearchMembers = ({props}) => {
 
                 <Row>
                 <Col>
-                  <ListGroup as="ol" variant="flush" >
-                    {searchResult.map( (searchResult, index) =>
-                      <ListGroup.Item as="li" key={index}  className="d-flex justify-content-between align-items-start memberLists">
-                        <Row>
-                            <Col>
-                                <img src={searchResult.image}
-                                    onError={(e)=>{e.target.onError = null; e.target.src = image_S1}}
-                                    className="profileImages"
-                                />
-                                        <p style={{color: 'black'}}>{searchResult.name}</p>
-
-                                    {selectedUser && (
-                                        <div>
-                                        <h2>{selectedUser.name}</h2>
-                                        <p>{selectedUser.email}</p>
-                                        {/* Render other user details here */}
-                                        </div>
-                                    )}
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Button id={searchResult._id} className='sendRequestBtn'  bg="primary" onClick={handleRequestBtn}>
-                                    Send Request
-                                </Button>
-                            </Col>
-                        </Row>
-                    </ListGroup.Item>
-                    )}
-                  </ListGroup>
+                <ListGroup as="ol" variant="flush">
+                {searchResult.map((searchResult, index) => (
+                    <ListGroup.Item as="li" key={index} className="d-flex justify-content-between align-items-start memberLists">
+                    <Row>
+                      <Col>
+                        <img
+                          src={searchResult.image}
+                          onError={(e) => {
+                            e.target.onError = null;
+                            e.target.src = image_S1;
+                          }}
+                          className="profileImages"
+                        />
+                        <OverlayTrigger
+                          placement="bottom"
+                          overlay={<Tooltip id={`tooltip-${searchResult._id}`}>{searchResult.profile}</Tooltip>}
+                        >
+                          <span className="name-icon" onClick={() => handleTooltipClick(searchResult._id)}>
+                            <i className="fas fa-info-circle"></i>
+                          </span>
+                        </OverlayTrigger>
+            
+                        <p style={{ color: 'black' }}>{searchResult.name}</p>
+            
+                        {selectedUserId === searchResult._id && (
+                          <div>
+                            <p>Name : {searchResult.name}</p>
+                            <p>RegistrationNo : {searchResult.registrationNo}</p>
+                            {/* Render other user details here */}
+                          </div>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <Button id={searchResult._id} className="sendRequestBtn" bg="primary" onClick={handleRequestBtn}>
+                          Send Request
+                        </Button>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>            
+                )
+              )}
+            </ListGroup>
                 </Col>
               </Row>
             </Modal.Body>

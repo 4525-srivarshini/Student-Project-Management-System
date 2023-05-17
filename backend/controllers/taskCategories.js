@@ -7,35 +7,34 @@ const User = require('../models/userSchema');
 const Categories = require('../models/newCategory');
 
 
-module.exports = router.post('/alltaskCategories', userAuth, async(req, res)=>{
-    const {name} = req.body;
+module.exports = router.post('/alltaskCategories', userAuth, async(req, res) => {
+    const { name } = req.body;
     console.log(req.userID)
     const categoriesExist = await Categories.findOne({ userRef: req.userID });
 
     try {
-        
-        if(categoriesExist){
+
+        if (categoriesExist) {
 
             categoriesExist.allCatogries.push({
                 category: name,
             })
 
-            await categoriesExist.save();
+            await ProjectTypeExist.save();
 
-            res.status(201).send({message: "Category added successfully"});
+            res.status(201).send({ message: "Category added successfully" });
 
-        }
-        else{
-            const data = new Categories({  
+        } else {
+            const data = new ProjectType({
                 userRef: req.userID,
                 allCatogries: [{
                     category: name
                 }]
             });
- 
+
             await data.save();
 
-            res.status(201).send({message: "Category added successfully"});
+            res.status(201).send({ message: "Category added successfully" });
         }
 
     } catch (error) {
@@ -46,23 +45,23 @@ module.exports = router.post('/alltaskCategories', userAuth, async(req, res)=>{
 
 
 
-module.exports = router.post('/deletingCategory', userAuth, async(req, res)=>{
+module.exports = router.post('/deletingCategory', userAuth, async(req, res) => {
     const catId = req.body.catId;
 
     try {
 
-        const updateCategories = await Categories.updateOne(
-            { userRef: req.userID},
-            {$pull: {
-                "allCatogries": {"_id": catId}
-            }});
+        const updateProjectType = await ProjectType.updateOne({ userRef: req.userID }, {
+            $pull: {
+                "allCatogries": { "_id": catId }
+            }
+        });
 
-        const getCategories = await Categories.findOne({ userRef: req.userID });
-        const allCatogries = getCategories.allCatogries
+        const getProjectType = await ProjectType.findOne({ userRef: req.userID });
+        const allCatogries = getProjectType.allCatogries
 
 
         res.status(201).send(allCatogries);
-        
+
     } catch (error) {
         res.status(500).send(error.message);
         console.log(error)
@@ -71,17 +70,16 @@ module.exports = router.post('/deletingCategory', userAuth, async(req, res)=>{
 
 
 
-module.exports = router.get('/showCategories', userAuth, async(req, res)=>{
-    const getCategories = await Categories.findOne({ userRef: req.userID });
+module.exports = router.get('/showProjectType', userAuth, async(req, res) => {
+    const getProjectType = await ProjectType.findOne({ userRef: req.userID });
     try {
-        if(getCategories){
-            const allCatogries = getCategories.allCatogries
+        if (getProjectType) {
+            const allCatogries = getProjectType.allCatogries
             res.status(201).send(allCatogries);
-        }
-        else{
+        } else {
             res.status(201).send([]);
         }
-        
+
     } catch (error) {
         res.status(500).send(error.message);
         console.log(error)

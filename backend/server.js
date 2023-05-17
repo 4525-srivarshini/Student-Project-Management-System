@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 dotenv.config({ path: './.env' });
 const mongoose = require('mongoose')
-mongoose.connect("mongodb://localhost:27017", {
+mongoose.connect("mongodb://localhost:27017/varshi", {
     useNewURLParser: true,
     family: 4,
     useUnifiedTopology: true,
