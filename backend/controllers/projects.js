@@ -353,7 +353,6 @@ module.exports = router.post('/phaseCompletedNotification', userAuth, async(req,
                 phaseTitle: selectedPhase.phaseTitle,
                 memberRef: selectedPhase.memberRef,
                 memberName: selectedPhase.memberName,
-                memberImage: findUser.image,
                 uniqueId: selectedPhase.uniqueId,
                 notificationDate: Date.now(),
             });

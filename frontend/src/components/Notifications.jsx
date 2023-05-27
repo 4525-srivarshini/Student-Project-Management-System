@@ -1,8 +1,9 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import '../stylesheets/notifications.css'
-import { Row, Col, Container, InputGroup, Button, Modal, FormControl, ListGroup, Badge } from 'react-bootstrap';
+import { Row, Col, Container, InputGroup, Button, Modal, FormControl, ListGroup, Badge, OverlayTrigger, Tooltip,  } from 'react-bootstrap';
 import SearchMembers from './SearchMembers';
+import Profile from './Profile';
 import image_S1 from '../images/abstract10.png'
 
 const Notifications = () => { 
@@ -17,8 +18,13 @@ const Notifications = () => {
     const [alertMessage, setAlertMessage] = useState("");
     const [alertTitle, setAlertTitle] = useState("");
     const [fetchData, setFetchData] = useState();
+    const [searchResult, setSearchResult] = useState([]);
 
+    const [selectedUserId, setSelectedUserId] = useState(null);
 
+    const handleTooltipClick = (userId) => {
+      setSelectedUserId(userId);
+    };
     const requestSentBYMe = async () =>{
       try {
           const response = await fetch('/requestSentBYMe', { 
@@ -160,6 +166,24 @@ const Notifications = () => {
                             />
                             <br></br>
                             <b>{senderProfiles.name}</b>
+                            <OverlayTrigger
+                          placement="bottom"
+                          overlay={<Tooltip id={`tooltip-${senderProfiles._id}`}>{senderProfiles.profile}</Tooltip>}
+                        >
+                          <span className="name-icon" onClick={() => handleTooltipClick(senderProfiles._id)}>
+                            <i className="fas fa-info-circle"></i>
+                          </span>
+                          
+                        </OverlayTrigger>
+                            <br></br>
+                            {selectedUserId === senderProfiles._id && (
+                                <div>
+                                  <p>Name: {senderProfiles.name}</p>
+                                  <p>RegistrationNo: {senderProfiles.registrationNo}</p>
+                                  {/* Render other user details here */}
+                                </div>
+                              )}
+
                             <br></br>
                             <br></br>
                             <Button id={senderProfiles._id} bg="primary" className="sendRequestBtn" onClick={handleAcceptBtn}>
@@ -177,8 +201,25 @@ const Notifications = () => {
                               className="profileImages"
                             />
                             <br></br>
-                            <b>{receiverProfiles.name}</b>
+                            <b>{receiverProfiles.name}
+                             <OverlayTrigger
+                          placement="bottom"
+                          overlay={<Tooltip id={`tooltip-${receiverProfiles._id}`}>{receiverProfiles.profile}</Tooltip>}
+                        >
+                          <span className="name-icon" onClick={() => handleTooltipClick(receiverProfiles._id)}>
+                            <i className="fas fa-info-circle"></i>
+                          </span>
+                          
+                        </OverlayTrigger></b>
                             <br></br>
+                            {selectedUserId === receiverProfiles._id && (
+                                <div>
+                                  <p>Name: {receiverProfiles.name}</p>
+                                  <p>RegistrationNo: {receiverProfiles.registrationNo}</p>
+                                  {/* Render other user details here */}
+                                </div>
+                              )}
+
                             <br></br>
                             <Button id={receiverProfiles._id} bg="primary" className="sendRequestBtn" onClick={handleCancelRequest}>
                               Cancel Request

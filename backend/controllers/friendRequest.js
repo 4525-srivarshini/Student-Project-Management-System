@@ -38,29 +38,28 @@ module.exports = router.get('/getFriends', userAuth, async(req, res) => {
 module.exports = router.post('/sendingRequest', userAuth, async(req, res) => {
     const personId = req.body.personId;
     const senderRequestExist = await FriendRequest.findOne({ sender: req.userID, receiver: personId });
-    const reveiverRequestExist = await FriendRequest.findOne({ sender: personId, receiver: req.userID });
-
+    const receiverRequestExist = await FriendRequest.findOne({ sender: personId, receiver: req.userID });
 
     try {
-
-        if (senderRequestExist || reveiverRequestExist) {
+        if (senderRequestExist || receiverRequestExist) {
             res.status(201).send({ message: "Request is pending" });
         } else {
             const data = new FriendRequest({
                 sender: req.userID,
                 receiver: personId,
+                isSent: true, // Add this line to mark the request as sent
             });
 
             await data.save();
 
             res.status(201).send({ message: "Request sent successfully" });
         }
-
     } catch (error) {
         res.status(500).send(error.message);
-        console.log(error)
+        console.log(error);
     }
 });
+
 
 
 module.exports = router.get('/requestSentBYMe', userAuth, async(req, res) => {
@@ -75,6 +74,7 @@ module.exports = router.get('/requestSentBYMe', userAuth, async(req, res) => {
                     _id: userProfile._id,
                     name: userProfile.name,
                     image: userProfile.image,
+                    registrationNo: userProfile.registrationNo
                 }
                 friendsProfile.push(userObj)
             })
@@ -109,6 +109,7 @@ module.exports = router.get('/getRequest', userAuth, async(req, res) => {
                     _id: userProfile._id,
                     name: userProfile.name,
                     image: userProfile.image,
+                    registrationNo: userProfile.registrationNo
                 }
                 friendsProfile.push(userObj)
             })

@@ -1,6 +1,6 @@
 import React, {useState, useLayoutEffect, useEffect} from 'react'
 import '../stylesheets/displayProjects.css'
-import { Row, Col, Container, Card, CardGroup, ProgressBar, Navbar, Nav, NavDropdown, Form, Image, Button, ListGroup, Offcanvas, InputGroup, Modal } from 'react-bootstrap';
+import { Row, Col, Container, Card, CardGroup, ProgressBar, Navbar, Nav, NavDropdown, Form, Image, Button, ListGroup,Table,  Offcanvas, InputGroup, Modal } from 'react-bootstrap';
 import CreateNotes from './CreateNotes';
 import UpdateNotes from './UpdateNotes';
 import DeleteNote from './DeleteNote';
@@ -76,24 +76,32 @@ const MyNotes = () => {
               
               <br></br>
               <Container>
-                <Row className="justify-content-md-center">
-                  {myNotes.map((element, index)=>
-                    <Col sm lg="4" key={index}>
-                      <ListGroup.Item className='notesCont' id={element._id} onClick={clickedNote}>
-                        <h5>Title: {element.noteTitle}</h5>
-                        <br></br>
-                        <p><b>Note:</b> {element.noteText}</p>
-                        <br></br>
-                        <p>Date: {element.noteDate.substring(0,10)}</p>
-                      </ListGroup.Item>
-                      <br></br>
-                      <p>Edit and Delete By clicking on that Note</p>
-                    </Col>
-                  )}
-                </Row>
-              </Container>
-            </Modal.Body>
-        </Modal>
+              <Table striped bordered>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Note</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {myNotes.map((element, index) => (
+                    <tr key={index} id={element._id}>
+                      <td>{element.noteTitle}</td>
+                      <td>{element.noteText}</td>
+                      <td>{element.noteDate.substring(0, 10)}</td>
+                      <td>
+                            <Button variant="success" >Edit</Button>{' '}
+                            <Button variant="danger">Delete</Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+    </Container>
+    </Modal.Body>
+    </Modal>
 
 
 

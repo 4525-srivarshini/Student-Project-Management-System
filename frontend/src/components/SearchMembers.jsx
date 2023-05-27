@@ -117,37 +117,48 @@ const SearchMembers = ({props}) => {
         compareIds();
     },[searchResult])
 
-    const handleRequestBtn = async (e) =>{
+    const handleRequestBtn = async (e) => {
         let personId = e.target.id;
         try {
-            const response = await fetch('/sendingRequest', {
-                method: 'POST',
-                headers: {
-                    'Content-Type' : 'application/json'
-                },
-                body: JSON.stringify({personId}),
-                // body: searchInput
-            })
-            let data = await response.json();
-            if(response.status === 201 && data){
-                setAlertTitle("Alert");
-                setAlertMessage(data.message);
-                setShowAlert(true);
-                props.setFetchData(data);
-                setShow(false);
-                setSearchInput("");
-                setSearchResult([]);
+          const response = await fetch('/sendingRequest', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ personId }),
+          });
+          let data = await response.json();
+          if (response.status === 201 && data) {
+            setAlertTitle("Alert");
+            setAlertMessage(data.message);
+            setShowAlert(true);
+            props.setFetchData(data);
+      
+            // Update the UI based on the response
+            if (data.message === "Request sent successfully") {
+              // Request sent successfully, update the UI accordingly
+              const updatedSearchResult = searchResult.map((item) => {
+                if (item._id === personId) {
+                  return { ...item, requestStatus: "sent" };
+                }
+                return item;
+              });
+              setSearchResult(updatedSearchResult);
             }
-            else{
-                setAlertTitle("Alert");
-                setAlertMessage(data.message);
-                setShowAlert(true);
-            }
+      
+            setShow(false);
+            setSearchInput("");
+            setSearchResult([]);
+          } else {
+            setAlertTitle("Alert");
+            setAlertMessage(data.message);
+            setShowAlert(true);
+          }
         } catch (error) {
-            console.log(error)
+          console.log(error);
         }
-
-    }
+      };
+      
 
 
 

@@ -2,49 +2,43 @@ const mongoose = require('mongoose');
 
 const projectNotification = new mongoose.Schema({
     projectRef: {
-        type : mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Project",
         required: true
     },
-    phaseId: { 
-        type : String,
+    phaseId: {
+        type: String,
         required: true
     },
     phaseNum: {
-        type : String,
+        type: String,
         required: true
     },
     phaseTitle: {
-        type : String,
+        type: String,
         required: true
     },
     memberRef: {
-        type : mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
     memberName: {
-        type : String,
-        required: true
-    },
-    memberImage: {
-        type : String,
+        type: String,
         required: true
     },
     uniqueId: {
-        type : String,
+        type: String,
         required: true
-    }, 
+    },
     notificationDate: {
-        type : Date,
+        type: Date,
         required: true
-    },     
-    
+    },
+
 })
 
 
 const ProjectNotification = mongoose.model('PROJECTNOTIFICATION', projectNotification);
 
 module.exports = ProjectNotification;
-
-

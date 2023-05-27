@@ -69,7 +69,7 @@ const Messages = () => {
             const data = await response.json();
             console.log(data)
             setAllfriends(data);
-            // console.log(senderProfiles)
+
 
         } catch (error) {
             console.log(error)
